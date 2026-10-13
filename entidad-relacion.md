@@ -1,0 +1,1 @@
+![Insertar imagen](./images/entidad.png)
