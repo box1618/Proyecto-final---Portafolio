@@ -13,10 +13,10 @@ Publicar y organizar obras artísticas en redes sociales tradicionales suele lim
 
 | Layer | Technologies |
 | :--- | :--- |
-| **Frontend** | React.js, HTML5, CSS3, Tailwind CSS, JavaScript (ES6+)[cite: 2] |
-| **Backend** | Node.js, Express.js (RESTful API Architecture)[cite: 2] |
-| **Database** | MongoDB / Firebase Firestore[cite: 2] |
-| **Libraries & Tools** | Axios, React Router, Cloudinary / Firebase Storage, Lucide Icons[cite: 2] |
+| **Frontend** | React.js, HTML5, CSS3, Tailwind CSS, JavaScript (ES6+) |
+| **Backend** | Node.js, Express.js (RESTful API Architecture) |
+| **Database** | MongoDB / Firebase Firestore |
+| **Libraries & Tools** | Axios, React Router, Cloudinary / Firebase Storage, Lucide Icons |
 
 ---
 
