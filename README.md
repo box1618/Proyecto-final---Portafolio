@@ -5,7 +5,7 @@
 ---
 
 ## Project Overview
-Publicar y organizar obras artísticas en redes sociales tradicionales suele limitar la presentación visual y la interacción directa. **ArtSphere** resuelve este problema ofreciendo un espacio dinámico donde los artistas pueden categorizar sus piezas, mostrar galerías optimizadas en alta resolución, detallar sus procesos creativos y permitir a los clientes solicitar comisiones personalizadas de manera directa.
+Publicar y organizar obras artísticas en redes sociales tradicionales suele limitar la presentación visual y la interacción directa. Resuelve este problema ofreciendo un espacio dinámico donde los artistas pueden categorizar sus piezas, mostrar galerías optimizadas en alta resolución, detallar sus procesos creativos y permitir a los clientes solicitar comisiones personalizadas de manera directa.
 
 ---
 
@@ -29,7 +29,7 @@ El sistema está estructurado mediante colecciones orientadas a documentos NoSQL
 
 ---
 
-## Key Features & User Stories (Sprint 1)
+## Key Features & User Stories 
 - [x] **High-Resolution Gallery:** Exploración de obras de arte adaptadas a una cuadrícula responsiva sin compresión agresiva
 - [x] **Dynamic Filtering:** Filtrado rápido de piezas según su categoría o estilo artístico
 - [x] **Creative Process Details:** Visualización de bocetos, paletas de colores y notas del autor para cada proyecto
