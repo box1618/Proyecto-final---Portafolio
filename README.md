@@ -38,7 +38,7 @@ El sistema está estructurado mediante colecciones orientadas a documentos NoSQL
 
 ##  Getting Started & Installation
 1. Clonar el repositorio
-git clone https://github.com/tu-usuario/ArtSphere.git
+git clone https://github.com/box1618/Proyecto-final---Portafolio.git
 cd ArtSphere
 
 2. Configurar el Backend
