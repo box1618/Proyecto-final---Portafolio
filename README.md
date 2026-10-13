@@ -20,7 +20,7 @@ Publicar y organizar obras artísticas en redes sociales tradicionales suele lim
 
 ---
 
-## Database Entity-Relationship (MongoDB NoSQL Schema)
+## Database Entity-Relationship (MongoDB)
 El sistema está estructurado mediante colecciones orientadas a documentos NoSQL:
 * **`USERS`**: Almacena perfiles de clientes y del artista administrador (`role`, `email`, contraseña encriptada).
 * **`CATEGORIES`**: Clasifica los estilos técnicos del arte (ej. *Digital Illustration*, *Traditional Painting*).
