@@ -30,11 +30,11 @@ El sistema está estructurado mediante colecciones orientadas a documentos NoSQL
 ---
 
 ## Key Features & User Stories (Sprint 1)
-- [x] **High-Resolution Gallery:** Exploración de obras de arte adaptadas a una cuadrícula responsiva sin compresión agresiva[cite: 2].
-- [x] **Dynamic Filtering:** Filtrado rápido de piezas según su categoría o estilo artístico[cite: 2].
-- [x] **Creative Process Details:** Visualización de bocetos, paletas de colores y notas del autor para cada proyecto[cite: 2].
-- [x] **Secure Authentication:** Registro e inicio de sesión diferenciado para clientes y administrador[cite: 2].
-- [x] **Commission System:** Formulario para que los usuarios soliciten proyectos y servicios artísticos personalizados[cite: 2].
+- [x] **High-Resolution Gallery:** Exploración de obras de arte adaptadas a una cuadrícula responsiva sin compresión agresiva
+- [x] **Dynamic Filtering:** Filtrado rápido de piezas según su categoría o estilo artístico
+- [x] **Creative Process Details:** Visualización de bocetos, paletas de colores y notas del autor para cada proyecto
+- [x] **Secure Authentication:** Registro e inicio de sesión diferenciado para clientes y administrador
+- [x] **Commission System:** Formulario para que los usuarios soliciten proyectos y servicios artísticos personalizados
 
 ##  Getting Started & Installation
 1. Clonar el repositorio
