@@ -26,7 +26,7 @@ El sistema está estructurado mediante colecciones orientadas a documentos NoSQL
 * **`CATEGORIES`**: Clasifica los estilos técnicos del arte (ej. *Digital Illustration*, *Traditional Painting*).
 * **`ARTWORKS`**: Contiene las piezas visuales, su enlace multimedia optimizado y detalles del proceso creativo (`artistId`, `categoryId`).
 * **`COMMISSIONS`**: Gestiona las solicitudes de encargos personalizados hechas por los clientes (`clientId`, presupuesto, estado del proyecto).
-
+![Insertar imagen](./images/entidad.png)
 ---
 
 ## Key Features & User Stories 
