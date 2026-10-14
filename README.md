@@ -65,4 +65,4 @@ npm run dev
 ---
 
 ## Author
-* Fátima Ávila Mendoza — Lead Developer & UI/UX Designer and everything i guess
+* Fátima Ávila Mendoza Lead Developer & UI/UX Designer and everything i guess
