@@ -1,0 +1,325 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #f8fafd;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: #333333;
+}
+
+/* Contenedor Principal */
+.register-container {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 580px;
+  border-radius: 12px;
+  padding: 45px 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+  border: 1px solid #f0f0f0;
+}
+
+/* Encabezado */
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  background-color: #3f72af;
+  color: #ffffff;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: #557591;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.5;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+/* Formulario */
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 6px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.age-badge {
+  font-size: 11px;
+  background-color: #edf2f7;
+  color: #4a5568;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.form-hint {
+  display: block;
+  font-size: 11px;
+  color: #888888;
+  margin-top: 4px;
+}
+
+/* Campos de entrada con íconos o prefijos */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 11px 14px 11px 36px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  font-size: 13px;
+  color: #333333;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input-wrapper input:focus {
+  border-color: #3f72af;
+  background-color: #ffffff;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #718096;
+  font-size: 13px;
+}
+
+.input-prefix {
+  position: absolute;
+  left: 12px;
+  color: #718096;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.input-wrapper input[type="text"]#username {
+  padding-left: 28px;
+  padding-right: 35px;
+}
+
+.input-suffix-tag {
+  position: absolute;
+  right: 12px;
+  font-size: 10px;
+  color: #a0aec0;
+  font-weight: 600;
+  background: #edf2f7;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  color: #718096;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Fecha de nacimiento Grid */
+.birth-date-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.birth-date-grid input,
+.birth-date-grid select {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  font-size: 13px;
+  color: #333333;
+  outline: none;
+}
+
+.birth-date-grid select {
+  color: #718096;
+}
+
+/* Fila de Contraseñas gemelas */
+.passwords-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+@media (max-width: 550px) {
+  .passwords-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Medidor de seguridad */
+.password-strength-group {
+  margin-top: -4px;
+  margin-bottom: 14px;
+}
+
+.strength-bars {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.strength-bars .bar {
+  height: 4px;
+  background-color: #e2e8f0;
+  border-radius: 2px;
+}
+
+.strength-bars .bar.active {
+  background-color: #cbd5e1;
+}
+
+.strength-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: #a0aec0;
+}
+
+/* Checkbox de Términos */
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 22px;
+  font-size: 12px;
+  color: #4a5568;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #3f72af;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.checkbox-group a {
+  color: #3f72af;
+  text-decoration: none;
+}
+
+.checkbox-group a:hover {
+  text-decoration: underline;
+}
+
+/* Botón Principal */
+.btn-primary {
+  width: 100%;
+  background-color: #3f72af;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.btn-primary:hover {
+  background-color: #315c91;
+}
+
+/* Enlaces inferiores */
+.footer-links {
+  text-align: center;
+  font-size: 12px;
+  color: #666666;
+}
+
+.footer-links p a {
+  color: #3f72af;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-links p a:hover {
+  text-decoration: underline;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 15px;
+  color: #4a5568;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: #1a202c;
+}

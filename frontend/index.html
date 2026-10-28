@@ -1,43 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artfolio Studio - Ilustración & Arte Digital</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h3>ArtSphere</h3>
-        <ul>
-            <li><a href="#">Galería</a></li>
-            <li><a href="#">Servicios</a></li>
-            <li><a href="#">Contacto</a></li>
-            <li><a href="#">Iniciar sesión</a></li>
-            <button img src="path/to/image.jpg" alt="Imagen"></button>
-        </ul>
-    </header>
-    <main>
-        <div>
-            <h1>HISTORIAS ILUSTRADAS, LUZ Y COLOR</h1>
-            <p>Exploraciones contemporáneas en el mundo del arte</p>
-            <button>Explorar</button>
-            <button>Ver procesos</button>
-        </div>
-    </main>
-    <article>
-        <div>
-            <button>Todos</button>
-            <button>Ilustración</button>
-            <button>Fotografía</button>
-            <button>Diseño</button>
-            <button>Concept art</button>
-        </div>
-        <div>
 
+  <!-- Cabecera / Navegación -->
+  <header class="navbar">
+    <div class="logo">Artfolio Studio</div>
+    <nav class="nav-links">
+      <a href="#">Galería</a>
+      <a href="#">Comisiones</a>
+      <a href="#">Sobre Mí / Proceso</a>
+    </nav>
+    <a href="login.html" class="btn-portal">Iniciar Sesión <i class="fa-solid fa-user"></i></a>
+  </header>
+
+  <!-- Sección Principal / Hero -->
+  <main class="main-content">
+    
+    <div class="hero-section">
+      <span class="badge"><i class="fa-solid fa-sparkles"></i> CATÁLOGO CURADO 2026</span>
+      <h1>Ilustración & Arte Digital</h1>
+      <p>Exploración de atmósferas cinemáticas, arquitectura especulativa y renderizado de alta fidelidad. Creación de mundos inmersivos para cine, videojuegos y colecciones privadas.</p>
+      
+      <div class="stats-row">
+        <div><strong>06</strong> <span>OBRAS DESTACADAS</span></div>
+        <div><strong>4K+</strong> <span>RESOLUCIÓN NATIVA</span></div>
+        <div><strong>3/5</strong> <span>SLOTS DISPONIBLES</span></div>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters">
+      <button class="filter-btn active">Todos los Trabajos</button>
+      <button class="filter-btn">Render & 3D Art</button>
+      <button class="filter-btn">Concept Art & Entornos</button>
+      <button class="filter-btn">Animaciones & Motion</button>
+    </div>
+
+    <!-- Grid de Galería -->
+    <div class="gallery-grid">
+      
+      <!-- Tarjeta 1 -->
+      <div class="card">
+        <div class="card-img">
+          <img src="/images/gato.png" alt="Neo-Kyoto Cyberpunk Alley">
+          <span class="tag-top">Concept Art</span>
         </div>
-    </article>
-    <article>
-        <h2>Obras reciemm</h2>
-    </article>
+        <div class="card-body">
+          <h3>Neo-Kyoto Cyberpunk Alley</h3>
+          <p>Exploración de eco-urbana, niebla lumínica. Volumétrica y paleta de contrastes luz noche y cian.</p>
+          <div class="card-footer">
+            <span class="software"><i class="fa-solid fa-brush"></i> Blender + Photoshop</span>
+            <span class="stats"><i class="fa-regular fa-eye"></i> 2.4K &nbsp; <i class="fa-regular fa-heart"></i> 269</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2 -->
+      <div class="card">
+        <div class="card-img">
+          <img src="/images/gato.png" alt="Aura: Guardián del Abismo">
+          <span class="tag-top">3D & Digital Sculpture</span>
+        </div>
+        <div class="card-body">
+          <h3>Aura: Guardián del Abismo</h3>
+          <p>Render cinemático de texturas orgánicas. Bioluminiscencia y disipación subsuperficial en...</p>
+          <div class="card-footer">
+            <span class="software"><i class="fa-solid fa-cube"></i> ZBrush + Redshift</span>
+            <span class="stats"><i class="fa-regular fa-eye"></i> 4.1K &nbsp; <i class="fa-regular fa-heart"></i> 512</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3 -->
+      <div class="card">
+        <div class="card-img">
+          <img src="/images/gato.png" alt="Secuencia de Combate Fluido">
+          <span class="tag-top">2D Animation</span>
+        </div>
+        <div class="card-body">
+          <h3>Secuencia de Combate Fluido</h3>
+          <p>Prueba de animación tradicional dibujada a mano con estilizaciones de impacto temporal.</p>
+          <div class="card-footer">
+            <span class="software"><i class="fa-solid fa-film"></i> Harmony + After Effects</span>
+            <span class="stats"><i class="fa-regular fa-eye"></i> 3.1K &nbsp; <i class="fa-regular fa-heart"></i> 440</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sección CTA (Llamado a la acción) -->
+    <div class="cta-banner">
+      <div class="cta-text">
+        <span class="dot-green"></span> Disponibilidad actual: 3 cupos abiertos para proyectos externos
+        <h2>¿Listo para dar vida a tu próximo mundo visual?</h2>
+        <p>Abierto para concept art cinematográfico, ilustración promocional, portadas editoriales y diseño de criaturas para videojuegos y películas.</p>
+      </div>
+      <div class="cta-buttons">
+        <button class="btn-white">Solicitar Comisión <i class="fa-solid fa-arrow-right"></i></button>
+        <button class="btn-outline">Ver Tarifario & Proceso</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="footer">
+    <div class="footer-col">
+      <h3>Artfolio Studio</h3>
+      <p>Estudio digital especializado en concept art cinematográfico, modelado 3D y narrativa visual.</p>
+      <p class="slots-text"><span class="dot-green"></span> Disponibilidad: Slots Abiertas</p>
+    </div>
+    <div class="footer-col">
+      <h4>Portafolio</h4>
+      <a href="#">Render 3D</a>
+      <a href="#">Concept Art</a>
+      <a href="#">Animaciones</a>
+    </div>
+    <div class="footer-col">
+      <h4>Redes Artísticas</h4>
+      <a href="#">ArtStation</a>
+      <a href="#">Behance</a>
+      <a href="#">Instagram</a>
+      <a href="#">X / Twitter</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal & Clientes</h4>
+      <a href="#">Políticas de Servicio</a>
+      <a href="#">Portal de Entregas</a>
+      <a href="#">Pagos asegurados vía PayPal</a>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Artfolio Studio. Todos los derechos reservados.</p>
+      <p>Obras protegidas bajo derechos de autor intelectual.</p>
+    </div>
+  </footer>
+
 </body>
 </html>

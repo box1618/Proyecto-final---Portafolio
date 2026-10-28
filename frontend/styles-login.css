@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #f8fafd;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #333;
+}
+
+/* Tarjeta */
+.login-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 450px;
+  border-radius: 10px;
+  padding: 35px 30px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+/* Encabezado */
+.login-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.logo-box {
+  width: 40px;
+  height: 40px;
+  background-color: #3f72af;
+  color: #fff;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: #3f72af;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.login-header h1 {
+  font-size: 22px;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.desc {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* Inputs */
+.input-group {
+  margin-bottom: 16px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.label-row label {
+  font-weight: 600;
+}
+
+.hint, .forgot-link {
+  font-size: 11px;
+  color: #777;
+}
+
+.forgot-link {
+  color: #3f72af;
+  text-decoration: none;
+}
+
+.input-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-field i {
+  position: absolute;
+  color: #888;
+  font-size: 13px;
+}
+
+.input-field i:first-child {
+  left: 12px;
+}
+
+.toggle-eye {
+  right: 12px;
+  cursor: pointer;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 10px 35px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #f8fafd;
+  font-size: 13px;
+  outline: none;
+}
+
+/* Checkbox */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: #555;
+}
+
+/* Botones */
+.btn-primary {
+  width: 100%;
+  background-color: #3f72af;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  width: 100%;
+  background-color: #eef2f7;
+  color: #333;
+  border: none;
+  padding: 11px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* Divisor */
+.divider {
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  line-height: 0.1em;
+  margin: 20px 0 15px;
+}
+
+.divider span {
+  background: #fff;
+  padding: 0 10px;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.paypal-text {
+  text-align: center;
+  font-size: 11px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+/* Caja Informativa */
+.info-box {
+  background-color: #f8fafd;
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.info-box i {
+  color: #888;
+  font-size: 13px;
+}
+
+/* Link Inferior */
+.back-btn {
+  margin-top: 20px;
+  color: #555;
+  font-size: 12px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.back-btn:hover {
+  color: #3f72af;
+}

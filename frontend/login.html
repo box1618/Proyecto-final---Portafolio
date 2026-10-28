@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artfolio Studio - Acceso de Clientes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles-login.css">
+</head>
+<body>
+
+  <!-- Tarjeta de Login -->
+  <div class="login-card">
+    
+    <!-- Encabezado -->
+    <div class="login-header">
+      <div class="logo-box">
+        <i class="fa-solid fa-palette"></i>
+      </div>
+      <p class="subtitle">ARTFOLIO STUDIO • PORTAL PRIVADO</p>
+      <h1>Acceso de Clientes</h1>
+      <p class="desc">Consulta el progreso de tus comisiones, aprueba revisiones y descarga entregables en alta resolución.</p>
+    </div>
+
+    <!-- Formulario -->
+    <form class="login-form" onsubmit="event.preventDefault();">
+      
+      <!-- Campo Correo -->
+      <div class="input-group">
+        <div class="label-row">
+          <label for="email">Correo Electrónico</label>
+          <span class="hint">Registrado en la orden</span>
+        </div>
+        <div class="input-field">
+          <i class="fa-regular fa-envelope"></i>
+          <input type="email" id="email" placeholder="ejemplo@dominio.com">
+        </div>
+      </div>
+
+      <!-- Campo Contraseña -->
+      <div class="input-group">
+        <div class="label-row">
+          <label for="password">Contraseña</label>
+          <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+        </div>
+        <div class="input-field">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="password" value="............">
+          <i class="fa-regular fa-eye toggle-eye"></i>
+        </div>
+      </div>
+
+      <!-- Recordar sesión -->
+      <div class="checkbox-row">
+        <input type="checkbox" id="remember">
+        <label for="remember">Recordar mi sesión en este equipo</label>
+      </div>
+
+      <!-- Botón Entrar -->
+      <button type="submit" class="btn-primary">
+        Iniciar Sesión en el Portal <i class="fa-solid fa-arrow-right"></i>
+      </button>
+
+      <!-- Divisor -->
+      <div class="divider"><span>o</span></div>
+
+      <p class="paypal-text">O inicia sesión con tu ID de PayPal utilizado en la comisión</p>
+
+      <!-- Botón PayPal -->
+      <button type="button" class="btn-secondary">
+        <i class="fa-regular fa-id-card"></i> Autenticar con PayPal Checkout ID
+      </button>
+
+      <!-- Caja Info -->
+      <div class="info-box">
+        <i class="fa-solid fa-circle-info"></i>
+        <p>¿Primera vez aquí? <a href="register.html"></a>Crea tu cuenta</a></p>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Botón Regresar -->
+  <a href="index.html" class="back-btn">
+    <i class="fa-solid fa-arrow-left"></i> Volver a la Galería pública
+  </a>
+
+</body>
+</html>
