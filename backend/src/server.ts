@@ -1,4 +1,5 @@
 //archivo principal del servidor, configura y arranca el servidor Express
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { connectDB } from './conf/dbConnection';

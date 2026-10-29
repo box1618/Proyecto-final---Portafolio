@@ -5,7 +5,6 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { UserModel } from '../models/User';
 
-//registerUser es una funcion asincronica maneja el registro de un nuevo usuario
 export const registerUser = async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
@@ -15,7 +14,7 @@ export const registerUser = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'El correo electrónico ya está registrado.' });
     }
 
-    const saltRounds = 10;
+    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS || '10', 10);
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
     const newUser = new UserModel({
@@ -33,19 +32,18 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
-//loginUser es una funcion asincronica maneja el inicio de sesion de un usuario existente
 export const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({ error: 'Usuario no encontrado.' });
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Credenciales inválidas.' });
+      return res.status(401).json({ error: 'Credenciales inválidas' });
     }
 
     return res.status(200).json({

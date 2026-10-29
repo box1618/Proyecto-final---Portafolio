@@ -1,0 +1,3 @@
+LIBRERIAS DE NPM
+npm install express mongoose bcrypt cors dotenv
+npm install -D typescript ts-node @types/express @types/bcrypt @types/cors @types/node
