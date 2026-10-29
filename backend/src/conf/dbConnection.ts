@@ -1,10 +1,14 @@
+//archivo de configuración de la conexión a la base de datos, establece la conexión con MongoDB usando Mongoose
 import mongoose from 'mongoose';
 
 export const connectDB = async () => {
   try {
-    // Pega tu cadena aquí, cambia <db_password> por tu contraseña real y añade artfolio_db
-    const URI = 'mongodb+srv://fatimaavilamen_db_user:qbhVU7zk82544@cluster0.zqzwmep.mongodb.net/artfolio_db?retryWrites=true&w=majority';
-    
+    const URI = process.env.MONGO_URI;
+
+    if (!URI) {
+      throw new Error("La variable de entorno MONGO_URI no está definida");
+    }
+
     const conn = await mongoose.connect(URI);
     console.log(`MongoDB Conectado exitosamente: ${conn.connection.host}`);
   } catch (error) {

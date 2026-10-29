@@ -1,7 +1,11 @@
+//este archo contiene los controladores de usuario
+//que son las funciones que se encargan de manejar las solicitudes 
+// HTTP relacionadas con los usuarios, como el registro y el inicio de sesion
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import { UserModel } from '../models/user';
+import { UserModel } from '../models/User';
 
+//registerUser es una funcion asincronica maneja el registro de un nuevo usuario
 export const registerUser = async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
@@ -29,6 +33,7 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
+//loginUser es una funcion asincronica maneja el inicio de sesion de un usuario existente
 export const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;

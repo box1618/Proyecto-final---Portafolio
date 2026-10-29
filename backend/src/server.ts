@@ -1,8 +1,10 @@
+//archivo principal del servidor, configura y arranca el servidor Express
 import express from 'express';
 import cors from 'cors';
 import { connectDB } from './conf/dbConnection';
 import userRoutes from './routes/user.routes';
 
+//variable de entorno para el puerto del servidor
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -13,13 +15,13 @@ app.use('/api/users', userRoutes);
 app.use(express.json());
 app.use(cors());
 
-// Conectar Base de Datos
+// conectar Base de Datos
 connectDB();
 
-// Rutas de la API
+// rutas de la API
 app.use('/api/users', userRoutes);
 
-// Arrancar servidor
+// arrancar servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
