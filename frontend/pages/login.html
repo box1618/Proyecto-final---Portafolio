@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artfolio Studio - Acceso de Clientes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body class="auth-page">
+  <header class="auth-top">
+    <a class="brand" href="../index.html">Artfolio <span>Studio</span></a>
+    <a class="back-link" href="../index.html">
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+      Volver a comisiones
+    </a>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-card login-card" aria-labelledby="login-title">
+      <header class="login-header">
+        <div class="logo-box" aria-hidden="true">
+          <i class="fa-solid fa-palette"></i>
+        </div>
+        <p class="subtitle">Artfolio Studio · Portal privado</p>
+        <h1 id="login-title">Acceso de Clientes</h1>
+        <p class="desc">Consulta el progreso de tus comisiones, aprueba revisiones y descarga entregables en alta resolución.</p>
+      </header>
+
+      <form class="login-form" onsubmit="event.preventDefault();">
+        <div class="input-group">
+          <div class="label-row">
+            <label for="email">Correo electrónico</label>
+            <span class="hint">Registrado en la orden</span>
+          </div>
+          <div class="input-field">
+            <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+            <input type="email" id="email" placeholder="ejemplo@dominio.com" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="label-row">
+            <label for="password">Contraseña</label>
+            <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+          </div>
+          <div class="input-field">
+            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+            <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+            <i class="fa-regular fa-eye toggle-eye" aria-hidden="true"></i>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="remember">
+          <label for="remember">Recordar mi sesión en este equipo</label>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          Iniciar sesión en el portal
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </button>
+
+        <div class="info-box">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          <p>¿Primera vez aquí? <a href="register.html">Crea tu cuenta</a></p>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

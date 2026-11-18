@@ -20,6 +20,31 @@ Publicar y organizar obras artísticas en redes sociales tradicionales suele lim
 
 ---
 
+## Estructura del Frontend
+
+```text
+frontend/
+├── index.html
+├── css/
+│   ├── styles.css
+│   ├── servicios.css
+│   ├── auth.css
+│   └── portal-style.css
+├── js/
+│   ├── commission-request.js
+│   └── services.js
+└── pages/
+    ├── 3d-art.html
+    ├── animation-art.html
+    ├── concept-art.html
+    ├── login.html
+    ├── portal.html
+    ├── portfolio.html
+    └── register.html
+```
+
+`index.html` permanece en la raíz como página de entrada. Las páginas secundarias, hojas de estilo y scripts están agrupados por tipo. `services.js` controla las opciones de las fichas y `commission-request.js` presenta en `portal.html` el resumen de la comisión seleccionada.
+
 ## Database Entity-Relationship (MongoDB)
 El sistema está estructurado mediante colecciones orientadas a documentos NoSQL:
 * **`USERS`**: Almacena perfiles de clientes y del artista administrador (`role`, `email`, contraseña encriptada).
