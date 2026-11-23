@@ -1,0 +1,3 @@
+[submodule "backend/tests/Progra_paginas_web"]
+	path = backend/tests/Progra_paginas_web
+	url = https://github.com/box1618/Progra_paginas_web.git
