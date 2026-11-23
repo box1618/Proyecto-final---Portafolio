@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
+import type { HydratedDocument } from 'mongoose';
 import { UserModel, type IUser } from '../models/User';
 import { createAuthToken } from '../utils/auth.util';
 import { isValidEmail, parseAdultBirthDate } from '../utils/authValidation';
@@ -11,7 +12,7 @@ const publicUser = (user: { id: string; name: string; email: string; role: strin
   role: user.role
 });
 
-const profileUser = (user: IUser) => ({
+const profileUser = (user: HydratedDocument<IUser>) => ({
   id: user.id,
   name: user.name,
   email: user.email,
