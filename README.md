@@ -70,27 +70,48 @@ El sistema está estructurado mediante colecciones orientadas a documentos NoSQL
    npm install
    ```
 
-2. Copia `backend/src/.env.example` como `backend/src/.env` y configura `MONGO_URI`, un `JWT_SECRET` aleatorio de al menos 32 caracteres y `ARTIST_USER_ID`.
+2. Copia `backend/src/.env.example` como `backend/src/.env` y configura `MONGO_URI` y un `JWT_SECRET` aleatorio de al menos 32 caracteres. `ARTIST_USER_ID` debe ser el ID de la cuenta que tendrá el rol `artist`.
 
 3. Registra una cuenta desde el sitio. Para asignarla como artista, cambia su campo `role` a `artist` en MongoDB y copia su `_id` en `ARTIST_USER_ID`. Reinicia el backend después de cambiar el archivo `.env`.
 
-4. Inicia el API desde la raíz:
+4. En una terminal inicia el API desde la raíz:
 
    ```powershell
    npm run dev
    ```
 
-5. En otra terminal, sirve la carpeta `frontend` como sitio estático, por ejemplo:
+5. En otra terminal sirve el frontend:
 
    ```powershell
-   py -m http.server 5500 --directory frontend
+   npm run frontend
    ```
 
    Abre `http://localhost:5500`. El API queda disponible en `http://localhost:3000`; si usas otro puerto o URL, actualiza `frontend/js/config.js`.
 
-Para comprobar el backend, ejecuta `npm run build` y `npm test` desde la raíz.
+### Pruebas y CI
 
-Los endpoints actuales para la funcionalidad conectada son `POST /api/users/register`, `POST /api/users/login`, `POST /api/commissions` (requiere JWT) y `GET /api/health`. El total de la comisión se calcula también en el backend a partir del servicio, paquete y licencias elegidos.
+```powershell
+npm run build
+npm test
+```
+
+Las pruebas de integración usan una base MongoDB **dedicada** y vacían solo esa base al iniciar. Para ejecutarlas localmente, inicia una instancia local de MongoDB y define una URI de pruebas:
+
+```powershell
+$env:TEST_MONGO_URI = "mongodb://127.0.0.1:27017/artfolio_test"
+npm test
+```
+
+Para ejecutar también el flujo de navegador registro → inicio de sesión → solicitud de comisión, instala Chromium una vez con `npx playwright install chromium` y ejecuta:
+
+```powershell
+$env:E2E_MONGO_URI = "mongodb://127.0.0.1:27017/artfolio_e2e"
+npm run test:e2e
+```
+
+`npm run test:all` ejecuta las pruebas de API y E2E. Si las URI no están definidas, las pruebas de integración se omiten; CI las configura automáticamente.
+
+Los endpoints son `POST /api/users/register`, `POST /api/users/login`, `POST /api/commissions` (requiere JWT de cliente), `GET /api/commissions` (devuelve las propias solicitudes del cliente, las asignadas al artista o todas para admin) y `PATCH /api/commissions/:id/status` (solo artista asignado o admin). GitHub Actions ejecuta compilación, auditoría de dependencias, pruebas de integración y el flujo E2E en cada push y pull request.
 
 ## Security & Environment
 * Las credenciales de base de datos, el secreto JWT y el artista asignado se manejan mediante variables de entorno; no subas `backend/src/.env` a Git.

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar perfil - Artfolio Studio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/profile-edit.css">
+</head>
+<body class="edit-profile-page">
+  <header class="navbar">
+    <a class="logo" href="../index.html">Artfolio <span>Studio</span></a>
+    <a class="btn-portal" href="../index.html"><i class="fa-solid fa-arrow-left"></i> Ver perfil</a>
+  </header>
+
+  <main class="edit-profile-main">
+    <section class="edit-profile-card" aria-labelledby="edit-profile-title">
+      <div class="edit-profile-heading">
+        <div class="edit-profile-avatar" id="edit-avatar" aria-hidden="true">AR</div>
+        <div>
+          <span class="eyebrow">CONFIGURACIÓN</span>
+          <h1 id="edit-profile-title">Editar perfil</h1>
+        </div>
+      </div>
+
+      <form id="edit-profile-form">
+        <label for="edit-name">Nombre público</label>
+        <input id="edit-name" name="name" maxlength="50" required>
+
+        <label for="edit-handle">Usuario</label>
+        <div class="handle-input"><span>@</span><input id="edit-handle" name="handle" maxlength="30" pattern="[a-zA-Z0-9._-]+" required></div>
+
+        <label for="edit-title">Título profesional</label>
+        <input id="edit-title" name="artistTitle" maxlength="80">
+
+        <label for="edit-bio">Biografía</label>
+        <textarea id="edit-bio" name="bio" maxlength="300" rows="4"></textarea>
+
+        <label for="edit-response">Tiempo de respuesta</label>
+        <input id="edit-response" name="responseTime" maxlength="100">
+
+        <div class="edit-profile-actions">
+          <a class="edit-cancel-button" href="../index.html">Cancelar</a>
+          <button class="primary-button" type="submit">Guardar cambios</button>
+        </div>
+        <p class="form-status" id="edit-profile-status" role="status" hidden></p>
+      </form>
+    </section>
+  </main>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/edit-profile.js"></script>
+</body>
+</html>

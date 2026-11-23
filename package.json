@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "ts-node --project backend/tsconfig.json backend/src/server.ts",
-    "start": "ts-node --project backend/tsconfig.json backend/src/server.ts",
+    "start": "node backend/dist/server.js",
+    "frontend": "node frontend/server.js",
     "build": "tsc --project backend/tsconfig.json",
-    "test": "node --require ts-node/register --test backend/tests/domain-validation.test.js"
+    "test": "npm run build && node --test backend/tests/domain-validation.test.js backend/tests/api.integration.test.js",
+    "test:e2e": "npm run build && playwright test",
+    "test:all": "npm test && npm run test:e2e"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -20,6 +23,7 @@
     "mongoose": "^9.12.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",

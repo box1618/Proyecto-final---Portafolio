@@ -1,3 +1,15 @@
 /node_modules
 /backend/src/.env
 /backend/dist
+/playwright-report
+/test-results
+
+.env
+.env.*
+!.env.example
+
+/coverage
+/dist
+/build
+*.tsbuildinfo
+*.log

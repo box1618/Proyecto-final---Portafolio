@@ -26,14 +26,17 @@
 
     <section class="profile-shell" aria-label="Perfil de artista">
       <aside class="profile-card">
-        <div class="profile-avatar" aria-hidden="true">AR</div>
-        <h1>Alex Rivera <span class="verified" aria-label="Perfil verificado">✓</span></h1>
-        <p class="handle">@artfoliostudio</p>
-        <p class="artist-type">Artista digital / concept artist</p>
-        <p class="profile-bio">Diseño mundos, personajes y escenas para historias que merecen ser recordadas.</p>
+        <div class="profile-avatar" id="profile-avatar" aria-hidden="true">AR</div>
+        <h1><span id="profile-name">Alex Rivera</span> <span class="verified" aria-label="Perfil verificado">✓</span></h1>
+        <p class="handle" id="profile-handle">@artfoliostudio</p>
+        <p class="artist-type" id="profile-title">Artista digital / concept artist</p>
+        <p class="profile-bio" id="profile-bio">Diseño mundos, personajes y escenas para historias que merecen ser recordadas.</p>
         <div class="profile-rating"><span aria-hidden="true">★★★★★</span> 4.9 · 58 proyectos</div>
-        <a class="follow-button" href="pages/portfolio.html">Ver trabajos</a>
-        <p class="profile-note"><i class="fa-regular fa-comment-dots"></i> Respondo mensajes en 1-2 días hábiles</p>
+        <div class="profile-actions">
+          <a class="follow-button" href="pages/portfolio.html">Ver trabajos</a>
+          <a class="edit-profile-button" id="edit-profile-button" href="pages/edit-profile.html" hidden>Editar perfil</a>
+        </div>
+        <p class="profile-note"><i class="fa-regular fa-comment-dots"></i> <span id="profile-response">Respondo mensajes en 1-2 días hábiles</span></p>
       </aside>
 
       <div class="profile-main">
@@ -128,5 +131,7 @@
     <p>Arte digital, mundos e historias.</p>
     <p>© 2026 Artfolio Studio</p>
   </footer>
+  <script src="js/config.js"></script>
+  <script src="js/profile.js"></script>
 </body>
 </html>
