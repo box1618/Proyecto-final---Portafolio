@@ -97,8 +97,6 @@ a { color: inherit; text-decoration: none; }
 .commission-card { display: grid; grid-template-columns: minmax(200px, 42%) 1fr; overflow: hidden; border-radius: 17px; background: var(--panel-soft); transition: transform .18s ease, box-shadow .18s ease; }
 .commission-card:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0,0,0,.18); }
 .commission-art, .work-art { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 205px; padding: 20px; overflow: hidden; background: linear-gradient(0deg, rgba(14,15,23,.72), rgba(14,15,23,.08) 78%), url("../../images/cat.jpg") center 45% / cover no-repeat; }
-.commission-art span, .work-art span { color: rgba(255,255,255,.76); font-size: 9px; font-weight: 800; letter-spacing: 1.4px; }
-.commission-art strong, .work-art strong { margin-top: 3px; color: #fff; font-size: clamp(22px, 3vw, 34px); font-weight: 800; letter-spacing: -.8px; text-shadow: 0 2px 18px rgba(0,0,0,.34); }
 .commission-info { display: flex; flex-direction: column; justify-content: center; padding: 22px 24px; }
 .commission-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .commission-title-row h3 { margin: 0; font-size: 18px; }

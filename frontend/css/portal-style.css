@@ -113,33 +113,6 @@ a {
     url("../../images/cat.jpg") center 45% / cover no-repeat;
 }
 
-.artwork-kicker,
-.artwork-caption,
-.artwork-visual strong {
-  text-shadow: 0 2px 18px rgba(0, 0, 0, .35);
-}
-
-.artwork-kicker {
-  color: rgba(245, 244, 250, .75);
-  font-size: 10px;
-  font-weight: 650;
-  letter-spacing: .14em;
-}
-
-.artwork-visual strong {
-  align-self: center;
-  margin: auto;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(42px, 7vw, 78px);
-  font-weight: 400;
-  letter-spacing: -.06em;
-}
-
-.artwork-caption {
-  color: rgba(245, 244, 250, .7);
-  font-size: 11px;
-}
-
 .gallery-thumbs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -27,7 +27,7 @@
         <p class="desc">Consulta el progreso de tus comisiones, aprueba revisiones y descarga entregables en alta resolución.</p>
       </header>
 
-      <form class="login-form" onsubmit="event.preventDefault();">
+      <form class="login-form" data-auth-form="login">
         <div class="input-group">
           <div class="label-row">
             <label for="email">Correo electrónico</label>
@@ -35,7 +35,7 @@
           </div>
           <div class="input-field">
             <i class="fa-regular fa-envelope" aria-hidden="true"></i>
-            <input type="email" id="email" placeholder="ejemplo@dominio.com" autocomplete="email">
+            <input type="email" id="email" name="email" placeholder="ejemplo@dominio.com" autocomplete="email" required>
           </div>
         </div>
 
@@ -46,7 +46,7 @@
           </div>
           <div class="input-field">
             <i class="fa-solid fa-lock" aria-hidden="true"></i>
-            <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+            <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
             <i class="fa-regular fa-eye toggle-eye" aria-hidden="true"></i>
           </div>
         </div>
@@ -60,6 +60,7 @@
           Iniciar sesión en el portal
           <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
         </button>
+        <p class="form-status" id="auth-status" role="status" hidden></p>
 
         <div class="info-box">
           <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
@@ -68,5 +69,7 @@
       </form>
     </section>
   </main>
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
 </body>
 </html>

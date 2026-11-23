@@ -24,6 +24,7 @@ document.querySelectorAll(".order").forEach((order) => {
       category: order.querySelector(".order-category").textContent.trim(),
       title: order.querySelector("h1").textContent.trim(),
       package: tier.textContent.trim(),
+      tier: pane.dataset.tier,
       price: pane.dataset.price,
       description: pane.querySelector("p").textContent.trim(),
       delivery: facts[0].textContent.replace("Entrega:", "").trim(),

@@ -28,12 +28,9 @@ a { color: inherit; text-decoration: none; }
 .layout { display: grid; grid-template-columns: minmax(0, 1fr) 390px; gap: 30px; align-items: start; }
 .service-gallery { min-width: 0; }
 .artwork-visual { position: relative; display: flex; flex-direction: column; justify-content: flex-end; width: 100%; aspect-ratio: 1.48; overflow: hidden; padding: 28px; border-radius: 15px; background: linear-gradient(0deg, rgba(14,15,23,.62), rgba(14,15,23,.05) 72%), url("../../images/cat.jpg") center 45% / cover no-repeat; }
-.artwork-visual span { color: rgba(255,255,255,.75); font-size: 10px; font-weight: 800; letter-spacing: 1.8px; }
-.artwork-visual strong { color: #fff; font-size: clamp(28px,5vw,54px); font-weight: 800; letter-spacing: -1.5px; text-shadow: 0 2px 24px rgba(0,0,0,.4); }
 .thumbs { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 10px; }
 .thumb { position: relative; min-height: 92px; overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: url("../../images/cat.jpg") center 45% / cover no-repeat; }
 .thumb::after { position: absolute; inset: 0; content: ""; background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,.68)); }
-.thumb-label { position: absolute; bottom: 8px; left: 9px; z-index: 1; color: rgba(255,255,255,.83); font-size: 9px; font-weight: 700; text-transform: uppercase; }
 .artist { display: flex; align-items: center; gap: 11px; margin-top: 19px; padding: 16px; border: 1px solid var(--line); border-radius: 13px; background: var(--panel); }
 .avatar { width: 42px; height: 42px; display: grid; flex-shrink: 0; place-items: center; border-radius: 50%; background: linear-gradient(135deg,#d59a70,#61384b 55%,#5f8c7d); font-size: 13px; font-weight: 800; }
 .artist-name { font-size: 13px; font-weight: 700; }

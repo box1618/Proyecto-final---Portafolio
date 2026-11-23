@@ -13,10 +13,10 @@ Publicar y organizar obras artísticas en redes sociales tradicionales suele lim
 
 | Layer | Technologies |
 | :--- | :--- |
-| **Frontend** | React.js, HTML5, CSS3, Tailwind CSS, JavaScript (ES6+) |
+| **Frontend** | HTML5, CSS3, JavaScript (ES6+) |
 | **Backend** | Node.js, Express.js (RESTful API Architecture) |
-| **Database** | MongoDB / Firebase Firestore |
-| **Libraries & Tools** | Axios, React Router, Cloudinary / Firebase Storage, Lucide Icons |
+| **Database** | MongoDB con Mongoose |
+| **Libraries & Tools** | TypeScript, bcrypt, JSON Web Token |
 
 ---
 
@@ -31,10 +31,12 @@ frontend/
 │   ├── auth.css
 │   └── portal-style.css
 ├── js/
+│   ├── auth.js
 │   ├── commission-request.js
+│   ├── config.js
 │   └── services.js
 └── pages/
-    ├── 3d-art.html
+    ├── art.html
     ├── animation-art.html
     ├── concept-art.html
     ├── login.html
@@ -43,7 +45,7 @@ frontend/
     └── register.html
 ```
 
-`index.html` permanece en la raíz como página de entrada. Las páginas secundarias, hojas de estilo y scripts están agrupados por tipo. `services.js` controla las opciones de las fichas y `commission-request.js` presenta en `portal.html` el resumen de la comisión seleccionada.
+El frontend es estático y vive por completo en `frontend/`. `services.js` controla las opciones de las fichas; `auth.js` conecta el registro/inicio de sesión y `commission-request.js` envía las solicitudes al API. La URL del API para desarrollo se configura en `frontend/js/config.js`.
 
 ## Database Entity-Relationship (MongoDB)
 El sistema está estructurado mediante colecciones orientadas a documentos NoSQL:
@@ -62,30 +64,37 @@ El sistema está estructurado mediante colecciones orientadas a documentos NoSQL
 - [x] **Commission System:** Formulario para que los usuarios soliciten proyectos y servicios artísticos personalizados
 
 ##  Getting Started & Installation
-1. Clonar el repositorio
-git clone https://github.com/box1618/Proyecto-final---Portafolio.git
+1. Instala las dependencias desde la raíz del repositorio:
 
-2. Configurar el Backend
-cd backend
-npm install
+   ```powershell
+   npm install
+   ```
 
-Crea un archivo llamado .env en la carpeta del backend con lo siguiente:
-PORT=5000
-MONGO_URI=tu_conexion_de_mongodb
-JWT_SECRET=tu_clave_secreta
+2. Copia `backend/src/.env.example` como `backend/src/.env` y configura `MONGO_URI`, un `JWT_SECRET` aleatorio de al menos 32 caracteres y `ARTIST_USER_ID`.
 
-Inicia el servidor backend:
-npm run dev
+3. Registra una cuenta desde el sitio. Para asignarla como artista, cambia su campo `role` a `artist` en MongoDB y copia su `_id` en `ARTIST_USER_ID`. Reinicia el backend después de cambiar el archivo `.env`.
 
-3. Configurar el Frontend
-cd ../frontend
-npm install
-npm run dev
+4. Inicia el API desde la raíz:
+
+   ```powershell
+   npm run dev
+   ```
+
+5. En otra terminal, sirve la carpeta `frontend` como sitio estático, por ejemplo:
+
+   ```powershell
+   py -m http.server 5500 --directory frontend
+   ```
+
+   Abre `http://localhost:5500`. El API queda disponible en `http://localhost:3000`; si usas otro puerto o URL, actualiza `frontend/js/config.js`.
+
+Para comprobar el backend, ejecuta `npm run build` y `npm test` desde la raíz.
+
+Los endpoints actuales para la funcionalidad conectada son `POST /api/users/register`, `POST /api/users/login`, `POST /api/commissions` (requiere JWT) y `GET /api/health`. El total de la comisión se calcula también en el backend a partir del servicio, paquete y licencias elegidos.
 
 ## Security & Environment
-* Las credenciales de bases de datos y tokens se manejan mediante variables de entorno (.env).
-* Las contraseñas de usuario se almacenan de forma segura utilizando hashing (bcrypt).
-* Las rutas de administración del portafolio se encuentran protegidas mediante validación de tokens (JWT).
+* Las credenciales de base de datos, el secreto JWT y el artista asignado se manejan mediante variables de entorno; no subas `backend/src/.env` a Git.
+* Las contraseñas se almacenan con bcrypt. El inicio de sesión devuelve un JWT de siete días, que se requiere para enviar una comisión.
 
 ---
 

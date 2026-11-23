@@ -2,17 +2,12 @@
 import mongoose from 'mongoose';
 
 export const connectDB = async () => {
-  try {
-    const URI = process.env.MONGO_URI;
+  const URI = process.env.MONGO_URI;
 
-    if (!URI) {
-      throw new Error("La variable de entorno MONGO_URI no está definida");
-    }
-
-    const conn = await mongoose.connect(URI);
-    console.log(`MongoDB Conectado exitosamente: ${conn.connection.host}`);
-  } catch (error) {
-    console.error(`Error de conexión a MongoDB: ${error}`);
-    process.exit(1);
+  if (!URI) {
+    throw new Error('La variable de entorno MONGO_URI no está definida');
   }
+
+  const conn = await mongoose.connect(URI);
+  console.log(`MongoDB conectado: ${conn.connection.host}`);
 };
