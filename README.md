@@ -113,6 +113,8 @@ npm run test:e2e
 
 Los endpoints son `POST /api/users/register`, `POST /api/users/login`, `POST /api/commissions` (requiere JWT de cliente), `GET /api/commissions` (devuelve las propias solicitudes del cliente, las asignadas al artista o todas para admin) y `PATCH /api/commissions/:id/status` (solo artista asignado o admin). GitHub Actions ejecuta compilación, auditoría de dependencias, pruebas de integración y el flujo E2E en cada push y pull request.
 
+Para mostrar la obra de Dibujo renderizado, la página `frontend/pages/art.html` consulta `GET /api/artworks?category=art` y carga la URL de Cloudinary que MongoDB devuelve en `imageUrl`. También se admiten registros existentes sin `category`; las nuevas obras deberían guardar `category: "art"`. El API debe tener conexión a MongoDB y la imagen debe estar disponible públicamente en Cloudinary. Las credenciales de Cloudinary se configuran solo en `backend/src/.env`, nunca en `.env.example` ni en el frontend.
+
 ## Security & Environment
 * Las credenciales de base de datos, el secreto JWT y el artista asignado se manejan mediante variables de entorno; no subas `backend/src/.env` a Git.
 * Las contraseñas se almacenan con bcrypt. El inicio de sesión devuelve un JWT de siete días, que se requiere para enviar una comisión.

@@ -16,8 +16,10 @@
     <p class="crumbs"><a href="../index.html">Comisiones</a> / <a href="../index.html#3d">Dibujo renderizado</a> / Detalles</p>
     <div class="layout">
       <section class="service-gallery" aria-label="Galería de dibujo renderizado">
-        <div class="artwork-visual visual-3d" aria-hidden="true">
+        <div class="artwork-visual visual-3d">
+          <img class="artwork-image" id="rendered-artwork" alt="Artwork de dibujo renderizado" hidden>
         </div>
+        <p class="artwork-image-status" id="artwork-image-status" role="status" hidden></p>
         <div class="thumbs" aria-label="Más vistas del proyecto">
           <div class="thumb visual-3d">
           </div>
@@ -127,6 +129,8 @@
   <footer class="bottom-footer">
     © 2026 Artfolio Studio · Derechos reservados
   </footer>
+  <script src="../js/config.js"></script>
+  <script src="../js/artwork-detail.js"></script>
   <script src="../js/services.js"></script>
 </body>
 </html>

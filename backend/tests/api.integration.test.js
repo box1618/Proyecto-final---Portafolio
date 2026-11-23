@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const app = require("../dist/app").default;
 const { UserModel } = require("../dist/models/User");
+const { ArtworkModel } = require("../dist/models/Artwork");
 const { createAuthToken } = require("../dist/utils/auth.util");
 
 const testJwtSecret = "integration-test-secret-with-at-least-32-characters";
@@ -75,6 +76,23 @@ test("commission creation rejects anonymous requests", async () => {
     licenses: []
   });
   assert.equal(response.status, 401);
+});
+
+test("artwork endpoint returns legacy Cloudinary images without a category", { skip: !process.env.TEST_MONGO_URI }, async () => {
+  const imageUrl = "https://res.cloudinary.com/example/image/upload/artfolio/test.png";
+  await ArtworkModel.collection.insertOne({
+    title: "Rendered artwork",
+    artistId: "test-artist",
+    description: "Test image",
+    imageUrl,
+    createdAt: new Date()
+  });
+
+  const response = await fetch(`${baseUrl}/api/artworks?category=art`);
+  assert.equal(response.status, 200);
+  const result = await response.json();
+  assert.equal(result.artworks.length, 1);
+  assert.equal(result.artworks[0].imageUrl, imageUrl);
 });
 
 test("registration validates age and never accepts a requested role", { skip: !process.env.TEST_MONGO_URI }, async () => {
