@@ -12,16 +12,37 @@ const publicUser = (user: { id: string; name: string; email: string; role: strin
   role: user.role
 });
 
-const profileUser = (user: HydratedDocument<IUser>) => ({
-  id: user.id,
-  name: user.name,
-  email: user.email,
-  role: user.role,
-  handle: user.handle || 'artfoliostudio',
-  artistTitle: user.artistTitle || 'Artista digital / concept artist',
-  bio: user.bio || 'Diseño mundos, personajes y escenas para historias que merecen ser recordadas.',
-  responseTime: user.responseTime || 'Respondo mensajes en 1-2 días hábiles'
-});
+const profileUser = (user: HydratedDocument<IUser>): {
+  id: string;
+  name: string;
+  email: string;
+  role: IUser['role'];
+  handle?: string;
+  avatarUrl?: string;
+  artistTitle?: string;
+  bio?: string;
+  responseTime?: string;
+} => {
+  const profile = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    handle: user.handle,
+    avatarUrl: user.avatarUrl,
+    bio: user.bio
+  };
+  if (user.role === 'client') return profile;
+
+  return {
+    ...profile,
+    handle: user.handle || 'artfoliostudio',
+    avatarUrl: user.avatarUrl,
+    artistTitle: user.artistTitle || 'Artista digital / concept artist',
+    bio: user.bio || 'Diseño mundos, personajes y escenas para historias que merecen ser recordadas.',
+    responseTime: user.responseTime || 'Respondo mensajes en 1-2 días hábiles'
+  };
+};
 
 export const getMyProfile = async (_req: Request, res: Response) => {
   try {
@@ -44,10 +65,15 @@ export const getPublicProfile = async (req: Request, res: Response) => {
         id: profile.id,
         name: profile.name,
         role: profile.role,
-        handle: profile.handle,
-        artistTitle: profile.artistTitle,
-        bio: profile.bio,
-        responseTime: profile.responseTime
+        ...(profile.role === 'client'
+          ? {}
+          : {
+              handle: profile.handle,
+              avatarUrl: profile.avatarUrl,
+              artistTitle: profile.artistTitle,
+              bio: profile.bio,
+              responseTime: profile.responseTime
+            })
       }
     });
   } catch (error) {
@@ -70,6 +96,11 @@ export const updateMyProfile = async (req: Request, res: Response) => {
   const artistTitle = typeof data.artistTitle === 'string' ? data.artistTitle.trim() : undefined;
   const bio = typeof data.bio === 'string' ? data.bio.trim() : undefined;
   const responseTime = typeof data.responseTime === 'string' ? data.responseTime.trim() : undefined;
+  const role = res.locals.userRole as IUser['role'];
+
+  if (role === 'client' && (artistTitle !== undefined || responseTime !== undefined)) {
+    return res.status(403).json({ error: 'Los campos profesionales solo están disponibles para artistas.' });
+  }
 
   if (name !== undefined && (!name || name.length > 50)) {
     return res.status(400).json({ error: 'El nombre debe tener entre 1 y 50 caracteres.' });

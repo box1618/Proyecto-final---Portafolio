@@ -1,6 +1,11 @@
 const apiBaseUrl = window.ARTFOLIO_CONFIG.apiBaseUrl.replace(/\/$/, "");
 const profileParams = new URLSearchParams(window.location.search);
 const profileId = profileParams.get("id");
+const editButton = document.getElementById("edit-profile-button");
+const manageServicesButton = document.getElementById("manage-services-button");
+
+if (editButton) editButton.hidden = true;
+if (manageServicesButton) manageServicesButton.hidden = true;
 
 function getAccessToken() {
   return sessionStorage.getItem("artfolioToken") || localStorage.getItem("artfolioToken");
@@ -14,6 +19,19 @@ function getInitials(name) {
     .map((part) => part[0])
     .join("")
     .toUpperCase();
+}
+
+function updateProfileAvatar(name, avatarUrl) {
+  const avatar = document.getElementById("profile-avatar");
+  if (!avatarUrl) {
+    avatar.textContent = getInitials(name);
+    return;
+  }
+
+  const image = document.createElement("img");
+  image.src = avatarUrl;
+  image.alt = "";
+  avatar.replaceChildren(image);
 }
 
 async function loadProfile() {
@@ -50,12 +68,12 @@ async function loadProfile() {
   document.getElementById("profile-title").textContent = profile.artistTitle;
   document.getElementById("profile-bio").textContent = profile.bio;
   document.getElementById("profile-response").textContent = profile.responseTime;
-  document.getElementById("profile-avatar").textContent = getInitials(profile.name);
+  updateProfileAvatar(profile.name, profile.avatarUrl);
 
-  const editButton = document.getElementById("edit-profile-button");
   const ownsProfile = selfProfile && (!profileId || profileId === selfProfile.id);
   const canEdit = ownsProfile && (selfProfile.role === "admin" || selfProfile.role === "artist");
   if (editButton) editButton.hidden = !canEdit;
+  if (manageServicesButton) manageServicesButton.hidden = !canEdit;
 }
 
 loadProfile();

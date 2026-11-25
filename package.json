@@ -7,6 +7,8 @@
     "start": "node backend/dist/server.js",
     "frontend": "node frontend/server.js",
     "build": "tsc --project backend/tsconfig.json",
+    "seed:services": "ts-node --project backend/tsconfig.json backend/src/scripts/seedServiceListings.ts",
+    "cleanup:client-profile-fields": "ts-node --project backend/tsconfig.json backend/src/scripts/cleanupClientProfileFields.ts",
     "test": "npm run build && node --test backend/tests/domain-validation.test.js backend/tests/api.integration.test.js",
     "test:e2e": "npm run build && playwright test",
     "test:all": "npm test && npm run test:e2e"

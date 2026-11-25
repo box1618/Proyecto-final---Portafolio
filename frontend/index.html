@@ -31,10 +31,10 @@
         <p class="handle" id="profile-handle">@artfoliostudio</p>
         <p class="artist-type" id="profile-title">Artista digital / concept artist</p>
         <p class="profile-bio" id="profile-bio">Diseño mundos, personajes y escenas para historias que merecen ser recordadas.</p>
-        <div class="profile-rating"><span aria-hidden="true">★★★★★</span> 4.9 · 58 proyectos</div>
         <div class="profile-actions">
           <a class="follow-button" href="pages/portfolio.html">Ver trabajos</a>
           <a class="edit-profile-button" id="edit-profile-button" href="pages/edit-profile.html" hidden>Editar perfil</a>
+          <a class="edit-profile-button" id="manage-services-button" href="pages/manage-services.html" hidden>Gestionar comisiones</a>
         </div>
         <p class="profile-note"><i class="fa-regular fa-comment-dots"></i> <span id="profile-response">Respondo mensajes en 1-2 días hábiles</span></p>
       </aside>
@@ -42,76 +42,14 @@
       <div class="profile-main">
         <div class="availability"><span class="availability-dot"></span> Disponible para nuevos proyectos</div>
         <nav class="profile-tabs" aria-label="Secciones del perfil">
-          <a class="selected" href="index.html" aria-current="page">Comisiones <span>3</span></a>
+          <a class="selected" href="index.html" aria-current="page">Comisiones <span id="service-count">0</span></a>
           <a href="pages/portfolio.html">Portafolio</a>
         </nav>
 
-        <div class="category-nav" aria-label="Categorías de comisión">
-          <a href="#concept">Concept Art</a>
-          <a href="#3d">Dibujo renderizado</a>
-          <a href="#animation">Animación</a>
-        </div>
+        <nav class="category-nav" id="category-nav" aria-label="Categorías de comisión"></nav>
 
-        <div class="commission-list">
-          <section class="commission-group" id="concept">
-            <div class="group-heading">
-              <h2>Concept Art</h2>
-              <span class="open-label">ABIERTO</span>
-            </div>
-            <a class="commission-card" href="pages/concept-art.html">
-              <div class="commission-art concept-art-preview" aria-hidden="true">
-              </div>
-              <div class="commission-info">
-                <div class="commission-title-row">
-                  <h3>Concept art cinematográfico</h3>
-                  <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                </div>
-                <p>Diseño de entornos, atmósferas y keyframes para cine y videojuegos.</p>
-                <div class="commission-meta"><span>Desde <strong>$80 USD</strong></span><span>Entrega desde 3 días</span></div>
-                <span class="commission-link">Ver detalles y opciones <i class="fa-solid fa-arrow-right"></i></span>
-              </div>
-            </a>
-          </section>
-
-          <section class="commission-group" id="3d">
-            <div class="group-heading">
-              <h2>Dibujo renderizado</h2>
-              <span class="open-label">ABIERTO</span>
-            </div>
-            <a class="commission-card" href="pages/art.html">
-              <div class="commission-art three-d-preview" aria-hidden="true">
-              </div>
-              <div class="commission-info">
-                <div class="commission-title-row">
-                  <h3>Ilustración digital con acabado renderizado</h3>
-                  <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                </div>
-                <p>Personajes, criaturas y escenas ilustradas con color, luces y acabado detallado.</p>
-                <div class="commission-meta"><span>Desde <strong>$150 USD</strong></span><span>Entrega desde 5 días</span></div>
-                <span class="commission-link">Ver detalles y opciones <i class="fa-solid fa-arrow-right"></i></span>
-              </div>
-            </a>
-          </section>
-
-          <section class="commission-group" id="animation">
-            <div class="group-heading">
-              <h2>Animación</h2>
-              <span class="open-label">ABIERTO</span>
-            </div>
-            <a class="commission-card" href="pages/animation-art.html">
-              <div class="commission-art animation-preview" aria-hidden="true">
-              </div>
-              <div class="commission-info">
-                <div class="commission-title-row">
-                  <h3>Animación 2D y motion</h3>
-                  <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                </div>
-                <p>Loops, secuencias de acción y piezas promocionales dibujadas a mano.</p>
-                <div class="commission-meta"><span>Desde <strong>$120 USD</strong></span><span>Entrega desde 4 días</span></div>
-                <span class="commission-link">Ver detalles y opciones <i class="fa-solid fa-arrow-right"></i></span>
-              </div>
-            </a>
-          </section>
+        <div class="commission-list" id="commission-list">
+          <p id="catalog-status" role="status">Cargando comisiones...</p>
         </div>
       </div>
     </section>
@@ -122,7 +60,7 @@
         <h2>¿Tienes una idea en mente?</h2>
         <p>Cuéntame sobre tu proyecto y encontraremos el servicio y alcance que mejor se adapte.</p>
       </div>
-      <a href="pages/portal.html" class="primary-button">Solicitar comisión <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="#commission-list" class="primary-button">Explorar comisiones <i class="fa-solid fa-arrow-right"></i></a>
     </section>
   </main>
 
@@ -133,5 +71,6 @@
   </footer>
   <script src="js/config.js"></script>
   <script src="js/profile.js"></script>
+  <script src="js/catalog.js"></script>
 </body>
 </html>

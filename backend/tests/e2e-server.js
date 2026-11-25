@@ -7,6 +7,7 @@ const path = require("node:path");
 const mongoose = require("mongoose");
 const app = require("../dist/app").default;
 const { UserModel } = require("../dist/models/User");
+const { ServiceListingModel } = require("../dist/models/ServiceListing");
 const serverClosers = [];
 
 async function listen(server, name) {
@@ -36,6 +37,23 @@ async function start() {
     birthDate: new Date("1990-01-01T00:00:00.000Z")
   });
   process.env.ARTIST_USER_ID = artist.id;
+  await ServiceListingModel.create({
+    slug: "e2e-starter-service",
+    category: "E2E",
+    title: "E2E Starter Service",
+    description: "Service used by the browser tests.",
+    rules: ["Test rule"],
+    images: [],
+    packages: [{
+      name: "Starter",
+      description: "Starter package",
+      price: 40,
+      deliveryDays: 3,
+      included: "One deliverable"
+    }],
+    active: true,
+    displayOrder: 0
+  });
 
   const apiServer = app.listen(3000);
   await listen(apiServer, "API E2E");

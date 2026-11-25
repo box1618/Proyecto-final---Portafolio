@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Administra las comisiones que aparecen en tu perfil.">
+  <title>Gestionar comisiones - Artfolio Studio</title>
+  <link rel="stylesheet" href="../css/manage-services.css">
+</head>
+<body>
+  <header class="manager-header">
+    <a class="brand" href="../index.html">Artfolio <span>Studio</span></a>
+    <a class="back-link" href="../index.html">Volver al perfil</a>
+  </header>
+
+  <main class="manager">
+    <header class="manager-intro">
+      <p class="eyebrow">PANEL DE ARTISTA</p>
+      <h1>Gestionar comisiones</h1>
+      <p>Actualiza precios, reglas, imágenes y contenido. Los cambios se guardan en MongoDB y aparecen en tu perfil público.</p>
+    </header>
+
+    <div class="manager-layout">
+      <section class="editor-card" aria-labelledby="editor-title">
+        <div class="card-heading">
+          <div>
+            <p class="eyebrow">EDITOR</p>
+            <h2 id="editor-title">Agregar un servicio</h2>
+          </div>
+          <button id="new-service-button" class="secondary-button" type="button">Nuevo</button>
+        </div>
+
+        <form id="service-form">
+          <input id="service-id" type="hidden">
+          <div class="field-grid">
+            <label>
+              Identificador URL
+              <input id="service-slug" name="slug" placeholder="ej. retrato-digital" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" maxlength="60" required>
+              <small>Usa letras minúsculas, números y guiones; no se puede cambiar después.</small>
+            </label>
+            <label>
+              Categoría
+              <input id="service-category" name="category" maxlength="60" placeholder="ej. Ilustración" required>
+            </label>
+          </div>
+          <label>
+            Título del servicio
+            <input id="service-title" name="title" maxlength="120" required>
+          </label>
+          <label>
+            Descripción
+            <textarea id="service-description" name="description" maxlength="2000" rows="4" required></textarea>
+          </label>
+          <label>
+            Reglas y condiciones <span class="optional">(una regla por línea)</span>
+            <textarea id="service-rules" name="rules" maxlength="6000" rows="4" placeholder="Ej. Incluye hasta dos rondas de revisión"></textarea>
+          </label>
+
+          <fieldset class="image-field">
+            <legend>Imágenes de la ficha</legend>
+            <label class="upload-control">
+              <span>Subir a Cloudinary (máximo 6 imágenes, 5 MB cada una)</span>
+              <input id="service-images" type="file" accept="image/*" multiple>
+            </label>
+            <div id="image-list" class="image-list" aria-live="polite"></div>
+          </fieldset>
+
+          <fieldset class="package-field">
+            <legend>Paquetes y precios</legend>
+            <div id="package-list" class="package-list"></div>
+            <button id="add-package-button" class="secondary-button" type="button">Agregar paquete</button>
+          </fieldset>
+
+          <div class="field-grid compact-grid">
+            <label>
+              Orden en el perfil
+              <input id="service-order" type="number" min="-1000" max="10000" step="1" value="0" required>
+            </label>
+            <label class="active-control">
+              <input id="service-active" type="checkbox" checked>
+              Mostrar en el perfil público
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="save-button" type="submit">Guardar servicio</button>
+            <button class="secondary-button" type="button" id="cancel-edit-button">Limpiar</button>
+          </div>
+          <p id="editor-status" class="status-message" role="status" hidden></p>
+        </form>
+      </section>
+
+      <aside class="list-card" aria-labelledby="list-title">
+        <p class="eyebrow">CATÁLOGO</p>
+        <h2 id="list-title">Tus servicios</h2>
+        <p class="list-description">Desactiva un servicio para ocultarlo sin borrar el historial de órdenes.</p>
+        <p id="list-status" class="status-message" role="status">Cargando servicios...</p>
+        <div id="service-list" class="service-list"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/manage-services.js"></script>
+</body>
+</html>

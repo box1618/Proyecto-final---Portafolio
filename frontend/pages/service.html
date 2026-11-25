@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Consulta los detalles y paquetes de esta comisión.">
+  <title>Detalles de comisión - Artfolio Studio</title>
+  <link rel="stylesheet" href="../css/service-detail.css">
+</head>
+<body>
+  <header class="service-header">
+    <a class="brand" href="../index.html">Artfolio <span>Studio</span></a>
+    <a class="back-link" href="../index.html">← Volver a comisiones</a>
+  </header>
+
+  <main class="service-page">
+    <nav class="breadcrumbs" aria-label="Ruta de navegación">
+      <a href="../index.html">Comisiones</a><span aria-hidden="true">/</span><span id="breadcrumb-title">Detalles</span>
+    </nav>
+    <p id="service-status" class="service-status" role="status">Cargando servicio...</p>
+    <div id="service-content" class="service-layout" hidden>
+      <section class="service-information">
+        <div class="gallery">
+          <img id="main-image" class="main-image" alt="" hidden>
+          <div id="image-thumbnails" class="image-thumbnails"></div>
+        </div>
+        <section class="description-card">
+          <p id="service-category" class="category-label"></p>
+          <h1 id="service-title"></h1>
+          <p id="service-description" class="service-description"></p>
+          <h2>Reglas y condiciones</h2>
+          <ul id="service-rules" class="rules-list"></ul>
+        </section>
+      </section>
+
+      <aside class="order-card">
+        <p class="eyebrow">PAQUETES</p>
+        <h2>Elige el alcance</h2>
+        <div id="package-options" class="package-options" role="group" aria-label="Paquetes disponibles"></div>
+        <section id="selected-package" class="selected-package" aria-live="polite"></section>
+        <form id="commission-form">
+          <label for="commission-message">Cuéntale al artista sobre tu idea</label>
+          <textarea id="commission-message" maxlength="1800" rows="5" placeholder="Describe tu proyecto, referencias y cualquier detalle importante." required></textarea>
+          <button id="submit-commission" class="request-button" type="submit">Solicitar comisión</button>
+          <p id="request-status" class="request-status" role="status" hidden></p>
+        </form>
+      </aside>
+    </div>
+  </main>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/service-detail.js"></script>
+</body>
+</html>

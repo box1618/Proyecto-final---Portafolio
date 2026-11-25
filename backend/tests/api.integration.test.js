@@ -12,6 +12,7 @@ let server;
 let baseUrl;
 let artist;
 let clientToken;
+let serviceListing;
 
 async function postJson(path, body, token) {
   return fetch(`${baseUrl}${path}`, {
@@ -78,6 +79,43 @@ test("commission creation rejects anonymous requests", async () => {
   assert.equal(response.status, 401);
 });
 
+test("service management endpoints reject requests without a token", async () => {
+  const listResponse = await fetch(`${baseUrl}/api/services/manage`);
+  assert.equal(listResponse.status, 401);
+
+  const createResponse = await postJson("/api/services", {});
+  assert.equal(createResponse.status, 401);
+
+  const uploadResponse = await postJson("/api/services/images", {});
+  assert.equal(uploadResponse.status, 401);
+});
+
+test("profile reads are not counted against the login rate limit", async () => {
+  for (let attempt = 0; attempt < 12; attempt += 1) {
+    const response = await fetch(`${baseUrl}/api/users/me`);
+    assert.equal(response.status, 401);
+  }
+});
+
+test("avatar upload requires an authenticated account", async () => {
+  const response = await postJson("/api/users/me/avatar", {});
+  assert.equal(response.status, 401);
+});
+
+test("artist avatar uploads reach file validation", { skip: !process.env.TEST_MONGO_URI }, async () => {
+  const formData = new FormData();
+  formData.append("avatar", new Blob(["not an image"], { type: "text/plain" }), "avatar.txt");
+
+  const response = await fetch(`${baseUrl}/api/users/me/avatar`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${createAuthToken(artist.id)}` },
+    body: formData
+  });
+
+  assert.equal(response.status, 400);
+  assert.match((await response.json()).error, /JPG, PNG, WebP o GIF/);
+});
+
 test("artwork endpoint returns legacy Cloudinary images without a category", { skip: !process.env.TEST_MONGO_URI }, async () => {
   const imageUrl = "https://res.cloudinary.com/example/image/upload/artfolio/test.png";
   await ArtworkModel.collection.insertOne({
@@ -117,6 +155,41 @@ test("registration validates age and never accepts a requested role", { skip: !p
   assert.equal("passwordHash" in registered.user, false);
   assert.equal(typeof registered.token, "string");
   clientToken = registered.token;
+  const clientDocument = await UserModel.findOne({ email: "integration-client@example.test" }).lean();
+  for (const field of ["handle", "artistTitle", "bio", "responseTime"]) {
+    assert.equal(Object.hasOwn(clientDocument, field), false);
+  }
+
+  const clientProfileUpdate = await fetch(`${baseUrl}/api/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${clientToken}`
+    },
+    body: JSON.stringify({
+      name: "Integration Client",
+      handle: "cliente-cc",
+      bio: "Perfil privado del cliente"
+    })
+  });
+  assert.equal(clientProfileUpdate.status, 200);
+  const updatedClient = (await clientProfileUpdate.json()).user;
+  assert.equal(updatedClient.handle, "cliente-cc");
+  assert.equal(updatedClient.bio, "Perfil privado del cliente");
+  assert.equal("artistTitle" in updatedClient, false);
+
+  const forbiddenProfessionalUpdate = await fetch(`${baseUrl}/api/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${clientToken}`
+    },
+    body: JSON.stringify({
+      name: "Integration Client",
+      artistTitle: "Artist"
+    })
+  });
+  assert.equal(forbiddenProfessionalUpdate.status, 403);
 
   const duplicate = await postJson("/api/users/register", {
     name: "Duplicate",
@@ -138,6 +211,76 @@ test("registration validates age and never accepts a requested role", { skip: !p
   });
   assert.equal(login.status, 200);
   assert.equal((await login.json()).user.role, "client");
+});
+
+test("artists can create and edit service listings while clients cannot", { skip: !process.env.TEST_MONGO_URI }, async () => {
+  const listing = {
+    slug: "integration-portrait",
+    category: "Illustration",
+    title: "Portrait commission",
+    description: "An editable illustration service.",
+    rules: ["One revision included."],
+    images: [],
+    packages: [{
+      name: "Color",
+      description: "Full color portrait.",
+      price: 85,
+      deliveryDays: 7,
+      included: "One character."
+    }],
+    active: true,
+    displayOrder: 0
+  };
+  const clientCreate = await postJson("/api/services", listing, clientToken);
+  assert.equal(clientCreate.status, 403);
+  const clientManage = await fetch(`${baseUrl}/api/services/manage`, {
+    headers: { Authorization: `Bearer ${clientToken}` }
+  });
+  assert.equal(clientManage.status, 403);
+
+  const artistToken = createAuthToken(artist.id);
+  const createResponse = await postJson("/api/services", listing, artistToken);
+  assert.equal(createResponse.status, 201);
+  serviceListing = (await createResponse.json()).service;
+
+  const publicResponse = await fetch(`${baseUrl}/api/services/${listing.slug}`);
+  assert.equal(publicResponse.status, 200);
+  assert.equal((await publicResponse.json()).service.packages[0].price, 85);
+
+  const updateResponse = await fetch(`${baseUrl}/api/services/${serviceListing._id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${artistToken}`
+    },
+    body: JSON.stringify({ ...listing, title: "Updated portrait", packages: [{ ...listing.packages[0], price: 95 }] })
+  });
+  assert.equal(updateResponse.status, 200);
+  serviceListing = (await updateResponse.json()).service;
+  assert.equal(serviceListing.packages[0].price, 95);
+});
+
+test("artist username updates are persisted in MongoDB", { skip: !process.env.TEST_MONGO_URI }, async () => {
+  const artistToken = createAuthToken(artist.id);
+  const response = await fetch(`${baseUrl}/api/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${artistToken}`
+    },
+    body: JSON.stringify({
+      name: "Integration Artist",
+      handle: "cc",
+      artistTitle: "Digital artist",
+      bio: "Integration test profile",
+      responseTime: "Two days"
+    })
+  });
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).user.handle, "cc");
+
+  const persistedArtist = await UserModel.findById(artist.id).lean();
+  assert.equal(persistedArtist.handle, "cc");
 });
 
 test("commission routes enforce roles and scope records to their owners", { skip: !process.env.TEST_MONGO_URI }, async () => {
@@ -186,4 +329,18 @@ test("commission routes enforce roles and scope records to their owners", { skip
   });
   assert.equal(updated.status, 200);
   assert.equal((await updated.json()).commission.status, "completed");
+});
+
+test("catalog commission uses the stored package price instead of a client price", { skip: !process.env.TEST_MONGO_URI }, async () => {
+  const packageId = serviceListing.packages[0]._id;
+  const response = await postJson("/api/commissions", {
+    listingId: serviceListing._id,
+    packageId,
+    description: "Please create a custom portrait.",
+    price: 1
+  }, clientToken);
+  assert.equal(response.status, 201);
+  const commission = (await response.json()).commission;
+  assert.equal(commission.budget, 95);
+  assert.equal(commission.title, "Updated portrait");
 });

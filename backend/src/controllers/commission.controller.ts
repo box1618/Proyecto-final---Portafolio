@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import { Types } from 'mongoose';
 import { CommissionModel, type ICommission } from '../models/Commission';
+import { ServiceListingModel } from '../models/ServiceListing';
 import { UserModel } from '../models/User';
 import { calculateCommissionQuote } from '../utils/commissionPricing';
 
@@ -13,12 +14,15 @@ export const createCommission = async (req: Request, res: Response) => {
   const data = body as Record<string, unknown>;
   const title = typeof data.title === 'string' ? data.title.trim() : '';
   const description = typeof data.description === 'string' ? data.description.trim() : '';
-  if (!title || title.length > 120 || !description || description.length > 2000) {
+  const isCatalogOrder = data.listingId !== undefined;
+  if ((!isCatalogOrder && !title) || title.length > 120 || !description || description.length > 2000) {
     return res.status(400).json({ error: 'El título y la descripción son obligatorios.' });
   }
 
-  const quote = calculateCommissionQuote(data.service, data.tier, data.licenses);
-  if (!quote) {
+  const quote = isCatalogOrder
+    ? null
+    : calculateCommissionQuote(data.service, data.tier, data.licenses);
+  if (!isCatalogOrder && !quote) {
     return res.status(400).json({ error: 'El servicio, paquete o licencia seleccionado no es válido.' });
   }
 
@@ -38,15 +42,89 @@ export const createCommission = async (req: Request, res: Response) => {
       return res.status(503).json({ error: 'ARTIST_USER_ID debe corresponder a una cuenta con rol artist o admin.' });
     }
 
+    let orderDetails: {
+      catalogListingId?: string;
+      service: string;
+      serviceName?: string;
+      serviceDescription?: string;
+      serviceRules?: string[];
+      serviceImages?: string[];
+      packageName?: string;
+      packageDescription?: string;
+      packageIncluded?: string;
+      packageDeliveryDays?: number;
+      packageTier: number;
+      licenses: ('commercial' | 'merchandising')[];
+      budget: number;
+      title: string;
+    };
+
+    if (isCatalogOrder) {
+      const listingId = data.listingId;
+      const packageId = data.packageId;
+      if (typeof listingId !== 'string' || !Types.ObjectId.isValid(listingId) ||
+          typeof packageId !== 'string' || !Types.ObjectId.isValid(packageId)) {
+        return res.status(400).json({ error: 'Selecciona un servicio y paquete válidos.' });
+      }
+
+      const listing = await ServiceListingModel.findOne({ _id: listingId, active: true });
+      if (!listing) {
+        return res.status(404).json({ error: 'El servicio ya no está disponible.' });
+      }
+
+      const packageIndex = listing.packages.findIndex((item) => item.id === packageId);
+      if (packageIndex < 0) {
+        return res.status(400).json({ error: 'El paquete seleccionado ya no está disponible.' });
+      }
+
+      const selectedPackage = listing.packages[packageIndex];
+      orderDetails = {
+        catalogListingId: listing.id,
+        service: listing.slug,
+        serviceName: listing.title,
+        serviceDescription: listing.description,
+        serviceRules: [...listing.rules],
+        serviceImages: [...listing.images],
+        packageName: selectedPackage.name,
+        packageDescription: selectedPackage.description,
+        packageIncluded: selectedPackage.included,
+        packageDeliveryDays: selectedPackage.deliveryDays,
+        packageTier: packageIndex,
+        licenses: [],
+        budget: selectedPackage.price,
+        title: listing.title
+      };
+    } else {
+      if (!quote) {
+        return res.status(400).json({ error: 'El servicio, paquete o licencia seleccionado no es válido.' });
+      }
+      orderDetails = {
+        service: quote.service,
+        packageTier: quote.packageTier,
+        licenses: quote.licenses,
+        budget: quote.budget,
+        title
+      };
+    }
+
     const commission = await CommissionModel.create({
       clientId,
       artistId: artist._id,
-      service: quote.service,
-      packageTier: quote.packageTier,
-      licenses: quote.licenses,
-      title,
+      catalogListingId: orderDetails.catalogListingId,
+      service: orderDetails.service,
+      serviceName: orderDetails.serviceName,
+      serviceDescription: orderDetails.serviceDescription,
+      serviceRules: orderDetails.serviceRules,
+      serviceImages: orderDetails.serviceImages,
+      packageName: orderDetails.packageName,
+      packageDescription: orderDetails.packageDescription,
+      packageIncluded: orderDetails.packageIncluded,
+      packageDeliveryDays: orderDetails.packageDeliveryDays,
+      packageTier: orderDetails.packageTier,
+      licenses: orderDetails.licenses,
+      title: orderDetails.title,
       description,
-      budget: quote.budget,
+      budget: orderDetails.budget,
       status: 'pending'
     });
 

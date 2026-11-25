@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Consulta tus solicitudes y el progreso de tus comisiones.">
+  <title>Mis comisiones - Artfolio Studio</title>
+  <link rel="stylesheet" href="../css/client-dashboard.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <a class="brand" href="../index.html">Artfolio <span>Studio</span></a>
+    <nav aria-label="Navegación de cliente">
+      <a href="../index.html">Ver perfil del artista</a>
+      <button id="logout-button" class="logout-button" type="button">Cerrar sesión</button>
+    </nav>
+  </header>
+
+  <main class="dashboard">
+    <section class="welcome">
+      <div>
+        <p class="eyebrow">TU ESPACIO DE CLIENTE</p>
+        <h1>Hola, <span id="client-name">...</span></h1>
+        <p id="client-email" class="muted"></p>
+      </div>
+      <div class="welcome-actions">
+        <button id="edit-client-profile-button" class="new-request" type="button" aria-expanded="false" aria-controls="client-profile">Editar perfil</button>
+        <a class="new-request" href="../index.html#commission-list">Explorar comisiones <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="client-profile" id="client-profile" aria-labelledby="client-profile-title" hidden>
+      <div class="profile-heading">
+        <div>
+          <p class="eyebrow">TU CUENTA</p>
+          <h2 id="client-profile-title">Mi perfil</h2>
+        </div>
+        <div class="client-avatar" id="client-avatar" aria-label="Foto de perfil">
+          <span id="client-avatar-initials">C</span>
+          <img id="client-avatar-image" alt="Foto de perfil" hidden>
+        </div>
+      </div>
+      <form id="client-profile-form" class="client-profile-form">
+        <label for="profile-name">Nombre</label>
+        <input id="profile-name" name="name" maxlength="50" required>
+
+        <label for="profile-handle">Usuario</label>
+        <div class="handle-input"><span aria-hidden="true">@</span><input id="profile-handle" name="handle" maxlength="30" pattern="[a-zA-Z0-9._-]+" required></div>
+
+        <label for="profile-bio">Biografía</label>
+        <textarea id="profile-bio" name="bio" maxlength="300" rows="3" placeholder="Cuéntanos un poco sobre ti (opcional)."></textarea>
+
+        <label for="profile-avatar-file">Foto de perfil</label>
+        <input id="profile-avatar-file" name="avatar" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+        <small class="profile-hint">JPG, PNG, WebP o GIF. Máximo 5 MB.</small>
+
+        <button id="save-profile-button" class="save-profile-button" type="submit">Guardar perfil</button>
+        <p id="client-profile-status" class="profile-status" role="status" hidden></p>
+      </form>
+    </section>
+
+    <section class="summary" aria-label="Resumen de tus comisiones">
+      <article class="summary-card">
+        <span class="summary-icon" aria-hidden="true">▤</span>
+        <div><p>Total de solicitudes</p><strong id="total-count">0</strong></div>
+      </article>
+      <article class="summary-card">
+        <span class="summary-icon active-icon" aria-hidden="true">◷</span>
+        <div><p>En progreso</p><strong id="active-count">0</strong></div>
+      </article>
+      <article class="summary-card">
+        <span class="summary-icon complete-icon" aria-hidden="true">✓</span>
+        <div><p>Completadas</p><strong id="completed-count">0</strong></div>
+      </article>
+    </section>
+
+    <section class="orders-section" aria-labelledby="orders-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">SEGUIMIENTO</p>
+          <h2 id="orders-title">Mis solicitudes</h2>
+        </div>
+        <div class="order-filters" role="group" aria-label="Filtrar solicitudes">
+          <button type="button" class="filter-button selected" data-filter="all" aria-pressed="true">Todas</button>
+          <button type="button" class="filter-button" data-filter="active" aria-pressed="false">En progreso</button>
+          <button type="button" class="filter-button" data-filter="completed" aria-pressed="false">Completadas</button>
+        </div>
+      </div>
+      <p id="dashboard-status" class="dashboard-status" role="status">Cargando tus solicitudes...</p>
+      <div id="orders-list" class="orders-list" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/client-dashboard.js"></script>
+</body>
+</html>

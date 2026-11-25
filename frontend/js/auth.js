@@ -11,7 +11,7 @@ function showAuthStatus(message, isError) {
 
 function validReturnPath() {
   const returnTo = authParams.get("returnTo");
-  return returnTo && /^(?:portal\.html|edit-profile\.html)(?:\?.*)?$/.test(returnTo)
+  return returnTo && /^(?:portal\.html|client-dashboard\.html|edit-profile\.html|service\.html)(?:\?.*)?$/.test(returnTo)
     ? returnTo
     : "../index.html";
 }
@@ -67,7 +67,12 @@ authForm.addEventListener("submit", async (event) => {
     sessionStorage.removeItem("artfolioToken");
     const remember = authForm.querySelector("#remember").checked;
     (remember ? localStorage : sessionStorage).setItem("artfolioToken", result.token);
-    window.location.assign(validReturnPath());
+    const destination = result.user?.role === "client"
+      ? authParams.has("returnTo")
+        ? validReturnPath()
+        : "client-dashboard.html"
+      : "../index.html";
+    window.location.assign(destination);
   } catch (error) {
     showAuthStatus(error instanceof Error ? error.message : "No se pudo conectar con el servidor.", true);
   } finally {

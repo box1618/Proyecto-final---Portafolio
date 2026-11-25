@@ -7,6 +7,7 @@ export interface IUser extends Document {
   passwordHash: string;
   birthDate?: Date;
   handle?: string;
+  avatarUrl?: string;
   artistTitle?: string;
   bio?: string;
   responseTime?: string;
@@ -19,10 +20,11 @@ const userSchema = new Schema<IUser>({
   role: { type: String, enum: ['client', 'artist', 'admin'], default: 'client' },
   passwordHash: { type: String, required: true },
   birthDate: { type: Date },
-  handle: { type: String, trim: true, maxlength: 30, default: 'artfoliostudio' },
-  artistTitle: { type: String, trim: true, maxlength: 80, default: 'Artista digital / concept artist' },
-  bio: { type: String, trim: true, maxlength: 300, default: 'Diseño mundos, personajes y escenas para historias que merecen ser recordadas.' },
-  responseTime: { type: String, trim: true, maxlength: 100, default: 'Respondo mensajes en 1-2 días hábiles' },
+  handle: { type: String, trim: true, maxlength: 30 },
+  avatarUrl: { type: String, trim: true, maxlength: 500 },
+  artistTitle: { type: String, trim: true, maxlength: 80 },
+  bio: { type: String, trim: true, maxlength: 300 },
+  responseTime: { type: String, trim: true, maxlength: 100 },
   createdAt: { type: Date, default: Date.now }
 });
 
