@@ -95,7 +95,8 @@ test("client registers, signs in, and submits a commission", async ({ page }) =>
     "src",
     "https://res.cloudinary.com/example/image/upload/artfolio/avatars/e2e-artist.png"
   );
-  await page.goto("/pages/portal.html?service=concept&tier=1&price=240");
+  await page.goto("/pages/portal.html?service=concept&tier=1&price=1");
+  await expect(page.locator("[data-total]")).toHaveText("$240.00 USD");
   await expect(page.locator("#artist-name")).toHaveText("E2E Artist");
   await expect(page.locator("#artist-avatar img")).toHaveAttribute(
     "src",
@@ -107,7 +108,7 @@ test("client registers, signs in, and submits a commission", async ({ page }) =>
   await expect(page.locator("#edit-profile-button")).toBeHidden();
   await expect(page.locator("#manage-services-button")).toBeHidden();
 
-  await page.goto("/pages/portal.html?service=concept&tier=1&price=240");
+  await page.goto("/pages/portal.html?service=concept&tier=1");
   await page.locator("#request-message").fill("Prueba E2E del brief de la comisión.");
   await page.locator('input[name="terms"]').check();
   await page.getByRole("button", { name: /Aceptar términos e iniciar solicitud/ }).click();

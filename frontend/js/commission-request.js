@@ -3,7 +3,7 @@ const services = {
     category: "Concept Art · Entornos",
     title: "Concept art cinematográfico",
     package: "Estándar",
-    price: 240,
+    prices: [80, 240, 600],
     description: "Entorno completo con color y luz.",
     delivery: "7 días",
     included: "Escena completa, 2 revisiones y PSD",
@@ -14,7 +14,7 @@ const services = {
     category: "Ilustración digital · Personajes y escenas",
     title: "Dibujo renderizado",
     package: "Ilustración",
-    price: 450,
+    prices: [150, 450, 900],
     description: "Una ilustración a color con acabado renderizado.",
     delivery: "12 días",
     included: "Personaje a color y 2 revisiones",
@@ -25,7 +25,7 @@ const services = {
     category: "Animación 2D · Motion",
     title: "Animación 2D y motion",
     package: "Secuencia",
-    price: 380,
+    prices: [120, 380, 800],
     description: "Combate, personaje o escena corta.",
     delivery: "10 días",
     included: "Hasta 8 s, 2 revisiones, MP4 HD",
@@ -42,10 +42,11 @@ const service = services[serviceKey];
 const requestForm = document.querySelector("#request-form");
 const requestStatus = document.querySelector("#request-status");
 const submitButton = requestForm.querySelector('button[type="submit"]');
-const priceParam = params.get("price");
-const parsedPrice = priceParam === null ? service.price : Number(priceParam);
-const validPrice = Number.isFinite(parsedPrice) && parsedPrice > 0;
-const basePrice = validPrice ? parsedPrice : service.price;
+const requestedTier = params.get("tier");
+const parsedTier = requestedTier === null ? 1 : Number(requestedTier);
+const validTier = Number.isInteger(parsedTier) && parsedTier >= 0 && parsedTier < service.prices.length;
+const selectedTier = validTier ? parsedTier : 1;
+const basePrice = service.prices[selectedTier];
 const apiBaseUrl = window.ARTFOLIO_CONFIG.apiBaseUrl.replace(/\/$/, "");
 let totalBudget = basePrice;
 
@@ -129,8 +130,8 @@ requestForm.querySelectorAll("input[data-rate]").forEach((input) => {
 updateTotal();
 loadArtistProfile();
 
-if (!validService || !validPrice) {
-  showRequestStatus("No se pudo validar el servicio o el precio. Vuelve a la ficha y selecciona la comisión de nuevo.", true);
+if (!validService || !validTier) {
+  showRequestStatus("No se pudo validar el servicio o el paquete. Vuelve a la ficha y selecciona la comisión de nuevo.", true);
   submitButton.disabled = true;
 }
 
@@ -141,7 +142,7 @@ if (!getAccessToken()) {
 
 requestForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  if (!requestForm.reportValidity() || !validService || !validPrice) return;
+  if (!requestForm.reportValidity() || !validService || !validTier) return;
 
   const token = getAccessToken();
   if (!token) {
@@ -172,7 +173,7 @@ requestForm.addEventListener("submit", async (event) => {
         title: document.querySelector("[data-title]").textContent,
         description,
         service: serviceKey,
-        tier: params.get("tier") || "1",
+        tier: String(selectedTier),
         licenses: selectedLicenses
       })
     });

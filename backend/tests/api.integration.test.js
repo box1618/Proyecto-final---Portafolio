@@ -338,7 +338,8 @@ test("commission routes enforce roles and scope records to their owners", { skip
     description: "Test brief",
     service: "concept",
     tier: "1",
-    licenses: ["commercial"]
+    licenses: ["commercial"],
+    price: 1
   }, clientToken);
   assert.equal(createdResponse.status, 201);
   const created = (await createdResponse.json()).commission;
