@@ -40,6 +40,8 @@ before(async () => {
       email: "integration-artist@example.test",
       passwordHash: await bcrypt.hash("artist-password", 10),
       role: "artist",
+      handle: "integration-artist",
+      avatarUrl: "https://res.cloudinary.com/example/image/upload/artfolio/avatars/artist.png",
       birthDate: new Date("1990-01-01T00:00:00.000Z")
     });
     process.env.ARTIST_USER_ID = artist.id;
@@ -100,6 +102,17 @@ test("profile reads are not counted against the login rate limit", async () => {
 test("avatar upload requires an authenticated account", async () => {
   const response = await postJson("/api/users/me/avatar", {});
   assert.equal(response.status, 401);
+});
+
+test("configured artist profile is shown without exposing private fields", { skip: !process.env.TEST_MONGO_URI }, async () => {
+  const response = await fetch(`${baseUrl}/api/users/artist`);
+  assert.equal(response.status, 200);
+  const { user } = await response.json();
+  assert.equal(user.name, "Integration Artist");
+  assert.equal(user.handle, "integration-artist");
+  assert.equal(user.avatarUrl, "https://res.cloudinary.com/example/image/upload/artfolio/avatars/artist.png");
+  assert.equal(user.role, "artist");
+  assert.equal("email" in user, false);
 });
 
 test("artist avatar uploads reach file validation", { skip: !process.env.TEST_MONGO_URI }, async () => {

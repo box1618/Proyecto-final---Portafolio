@@ -33,10 +33,10 @@
         </div>
 
         <section class="artist-card" aria-label="Artista">
-          <div class="artist-avatar" aria-hidden="true">AR</div>
+          <div class="artist-avatar" id="artist-avatar" aria-hidden="true">AR</div>
           <div class="artist-info">
-            <strong>Alex Rivera <span class="verified" aria-label="Perfil verificado">✓</span></strong>
-            <span>@artfoliostudio</span>
+            <strong><span id="artist-name">Alex Rivera</span> <span class="verified" aria-label="Perfil verificado">✓</span></strong>
+            <span id="artist-handle">@artfoliostudio</span>
           </div>
           <span class="rating" aria-label="Calificación 4.9 de 5">★ 4.9</span>
         </section>
@@ -82,7 +82,7 @@
             <strong data-total>$240.00 USD</strong>
           </div>
 
-          <label class="message-label" for="request-message">Mensaje para Alex</label>
+          <label class="message-label" id="request-message-label" for="request-message">Mensaje para Alex Rivera</label>
           <textarea id="request-message" name="message" maxlength="600" placeholder="Comparte el brief, las referencias o los detalles de tu idea."></textarea>
 
           <section class="payment-info" aria-label="Información de pago">

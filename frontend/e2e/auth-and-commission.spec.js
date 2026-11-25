@@ -90,6 +90,20 @@ test("client registers, signs in, and submits a commission", async ({ page }) =>
   await expect(page.locator("#profile-bio")).toHaveValue("Perfil de cliente de prueba.");
 
   await page.goto("/index.html");
+  await expect(page.locator("#profile-name")).toHaveText("E2E Artist");
+  await expect(page.locator("#profile-avatar img")).toHaveAttribute(
+    "src",
+    "https://res.cloudinary.com/example/image/upload/artfolio/avatars/e2e-artist.png"
+  );
+  await page.goto("/pages/portal.html?service=concept&tier=1&price=240");
+  await expect(page.locator("#artist-name")).toHaveText("E2E Artist");
+  await expect(page.locator("#artist-avatar img")).toHaveAttribute(
+    "src",
+    "https://res.cloudinary.com/example/image/upload/artfolio/avatars/e2e-artist.png"
+  );
+  await expect(page.locator("#request-message-label")).toHaveText("Mensaje para E2E Artist");
+
+  await page.goto("/index.html");
   await expect(page.locator("#edit-profile-button")).toBeHidden();
   await expect(page.locator("#manage-services-button")).toBeHidden();
 

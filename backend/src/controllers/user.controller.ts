@@ -46,6 +46,24 @@ const profileUser = (user: HydratedDocument<IUser>): {
   };
 };
 
+function publicProfile(profile: NonNullable<Awaited<ReturnType<typeof profileUser>>>) {
+  return {
+    id: profile.id,
+    name: profile.name,
+    role: profile.role,
+    ...(profile.role === 'client'
+      ? {}
+      : {
+          handle: profile.handle,
+          avatarUrl: profile.avatarUrl,
+          bannerUrl: profile.bannerUrl,
+          artistTitle: profile.artistTitle,
+          bio: profile.bio,
+          responseTime: profile.responseTime
+        })
+  };
+}
+
 export const getMyProfile = async (_req: Request, res: Response) => {
   try {
     const user = await UserModel.findById(res.locals.userId);
@@ -57,27 +75,35 @@ export const getMyProfile = async (_req: Request, res: Response) => {
   }
 };
 
+export const getConfiguredArtistProfile = async (_req: Request, res: Response) => {
+  const artistId = process.env.ARTIST_USER_ID;
+  if (!artistId) {
+    return res.status(503).json({ error: 'El artista todavía no está configurado.' });
+  }
+
+  try {
+    const user = await UserModel.findById(artistId);
+    if (!user || !['artist', 'admin'].includes(user.role)) {
+      return res.status(503).json({ error: 'ARTIST_USER_ID debe corresponder a una cuenta de artista o administrador.' });
+    }
+
+    return res.status(200).json({ user: publicProfile(profileUser(user)) });
+  } catch (error) {
+    if (error && typeof error === 'object' && 'name' in error && error.name === 'CastError') {
+      return res.status(503).json({ error: 'La configuración del perfil del artista no es válida.' });
+    }
+    console.error('Error al obtener el perfil del artista:', error);
+    return res.status(500).json({ error: 'No se pudo obtener el perfil del artista.' });
+  }
+};
+
 export const getPublicProfile = async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findById(req.params.id);
     if (!user) return res.status(404).json({ error: 'No se encontró el perfil.' });
     const profile = profileUser(user);
     return res.status(200).json({
-      user: {
-        id: profile.id,
-        name: profile.name,
-        role: profile.role,
-        ...(profile.role === 'client'
-          ? {}
-          : {
-              handle: profile.handle,
-              avatarUrl: profile.avatarUrl,
-              bannerUrl: profile.bannerUrl,
-              artistTitle: profile.artistTitle,
-              bio: profile.bio,
-              responseTime: profile.responseTime
-            })
-      }
+      user: publicProfile(profile)
     });
   } catch (error) {
     if (error && typeof error === 'object' && 'name' in error && error.name === 'CastError') {

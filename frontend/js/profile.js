@@ -70,7 +70,12 @@ async function loadProfile() {
       profile = null;
     }
   } else {
-    profile = selfProfile;
+    try {
+      const response = await fetch(`${apiBaseUrl}/users/artist`);
+      if (response.ok) profile = (await response.json()).user;
+    } catch {
+      profile = null;
+    }
   }
 
   if (!profile) return;
@@ -83,7 +88,7 @@ async function loadProfile() {
   updateProfileAvatar(profile.name, profile.avatarUrl);
   updateProfileBanner(profile.bannerUrl);
 
-  const ownsProfile = selfProfile && (!profileId || profileId === selfProfile.id);
+  const ownsProfile = selfProfile && profile.id === selfProfile.id;
   const canEdit = ownsProfile && (selfProfile.role === "admin" || selfProfile.role === "artist");
   if (editButton) editButton.hidden = !canEdit;
   if (manageServicesButton) manageServicesButton.hidden = !canEdit;

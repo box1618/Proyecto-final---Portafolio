@@ -34,6 +34,8 @@ async function start() {
     email: "e2e-artist@example.test",
     passwordHash: await bcrypt.hash("e2e-artist-password", 10),
     role: "artist",
+    handle: "e2e-artist",
+    avatarUrl: "https://res.cloudinary.com/example/image/upload/artfolio/avatars/e2e-artist.png",
     birthDate: new Date("1990-01-01T00:00:00.000Z")
   });
   process.env.ARTIST_USER_ID = artist.id;

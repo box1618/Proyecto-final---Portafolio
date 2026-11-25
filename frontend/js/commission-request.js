@@ -59,6 +59,42 @@ function showRequestStatus(message, isError) {
   requestStatus.classList.toggle("error", isError);
 }
 
+function getInitials(name) {
+  return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
+}
+
+async function loadArtistProfile() {
+  try {
+    const response = await fetch(`${apiBaseUrl}/users/artist`);
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "No se pudo cargar el perfil del artista.");
+
+    const artist = result.user;
+    document.querySelector("#artist-name").textContent = artist.name;
+    document.querySelector("#artist-handle").textContent = artist.handle ? `@${artist.handle}` : "";
+    document.querySelector("#request-message-label").textContent = `Mensaje para ${artist.name}`;
+
+    const avatar = document.querySelector(".artist-avatar");
+    if (artist.avatarUrl) {
+      const image = document.createElement("img");
+      image.src = artist.avatarUrl;
+      image.alt = "";
+      avatar.replaceChildren(image);
+    } else {
+      avatar.textContent = getInitials(artist.name);
+    }
+  } catch (error) {
+    document.querySelector("#artist-name").textContent = "Artista";
+    document.querySelector("#artist-handle").textContent = "";
+    document.querySelector("#request-message-label").textContent = "Mensaje para el artista";
+    document.querySelector(".artist-avatar").textContent = "A";
+    showRequestStatus(
+      error instanceof Error ? error.message : "No se pudo cargar el perfil del artista.",
+      true
+    );
+  }
+}
+
 document.body.dataset.service = serviceKey;
 document.querySelector("[data-category]").textContent = params.get("category") || service.category;
 document.querySelector("[data-title]").textContent = params.get("title") || service.title;
@@ -91,6 +127,7 @@ requestForm.querySelectorAll("input[data-rate]").forEach((input) => {
   input.addEventListener("change", updateTotal);
 });
 updateTotal();
+loadArtistProfile();
 
 if (!validService || !validPrice) {
   showRequestStatus("No se pudo validar el servicio o el precio. Vuelve a la ficha y selecciona la comisión de nuevo.", true);

@@ -3,7 +3,7 @@
 import { Router, type RequestHandler } from 'express';
 import rateLimit from 'express-rate-limit';
 import multer from 'multer';
-import { registerUser, loginUser, getMyProfile, getPublicProfile, updateMyProfile } from '../controllers/user.controller';
+import { registerUser, loginUser, getMyProfile, getPublicProfile, getConfiguredArtistProfile, updateMyProfile } from '../controllers/user.controller';
 import { updateMyAvatar, updateMyBanner } from '../controllers/profileAvatar.controller';
 import { requireAuth, requireRole } from '../middleware/auth.middleware';
 
@@ -45,6 +45,7 @@ router.get('/me', requireAuth, getMyProfile);
 router.patch('/me', requireAuth, updateMyProfile);
 router.post('/me/avatar', requireAuth, requireRole('client', 'artist', 'admin'), handleProfileImageUpload('avatar'), updateMyAvatar);
 router.post('/me/banner', requireAuth, requireRole('artist', 'admin'), handleProfileImageUpload('banner'), updateMyBanner);
+router.get('/artist', getConfiguredArtistProfile);
 router.get('/:id', getPublicProfile);
 
 export default router;
