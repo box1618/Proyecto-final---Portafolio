@@ -53,10 +53,11 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   height: 270px;
   overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(15, 16, 24, .12), rgba(15, 16, 24, .55)),
-    url("../../images/cat.jpg") center 48% / cover no-repeat;
+  background: url("../../images/cat.jpg") center 48% / cover no-repeat;
 }
+.profile-cover::before { position: absolute; z-index: 1; inset: 0; background: linear-gradient(180deg, rgba(15,16,24,.12), rgba(15,16,24,.55)); content: ""; pointer-events: none; }
+.profile-banner-image { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.profile-banner-image[hidden] { display: none; }
 .cover-caption { position: absolute; z-index: 2; top: 24px; right: max(6vw, calc((100vw - 1240px) / 2)); color: rgba(255,255,255,.78); font-size: 11px; font-weight: 700; letter-spacing: 2px; }
 
 .profile-shell {
@@ -67,7 +68,7 @@ a { color: inherit; text-decoration: none; }
   padding: 0 24px 64px;
 }
 .profile-card { max-width: 720px; padding-top: 0; color: var(--muted); font-size: 13px; }
-.profile-avatar { width: 112px; height: 112px; display: grid; place-items: center; margin: -18px 0 20px; border: 5px solid var(--page); border-radius: 50%; background: linear-gradient(135deg, #d59a70, #61384b 55%, #5f8c7d); color: #fff; font-size: 31px; font-weight: 800; box-shadow: 0 8px 26px rgba(0,0,0,.24); }
+.profile-avatar { position: relative; z-index: 1; width: 112px; height: 112px; display: grid; place-items: center; margin: -18px 0 20px; border: 5px solid var(--page); border-radius: 50%; background: linear-gradient(135deg, #d59a70, #61384b 55%, #5f8c7d); color: #fff; font-size: 31px; font-weight: 800; box-shadow: 0 8px 26px rgba(0,0,0,.24); }
 .profile-avatar img { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
 .profile-card h1 { margin: 0; color: var(--text); font-size: 23px; letter-spacing: -.5px; }
 .verified { display: inline-grid; width: 18px; height: 18px; place-items: center; margin-left: 4px; border-radius: 50%; background: #7ab8ff; color: #162239; font-size: 12px; vertical-align: 2px; }

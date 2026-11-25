@@ -3,6 +3,7 @@ const token = sessionStorage.getItem("artfolioToken") || localStorage.getItem("a
 const form = document.getElementById("edit-profile-form");
 const status = document.getElementById("edit-profile-status");
 const avatarFileInput = document.getElementById("edit-avatar-file");
+const bannerFileInput = document.getElementById("edit-banner-file");
 
 function showStatus(message, isError = false) {
   status.hidden = false;
@@ -45,6 +46,18 @@ function updateAvatar(name, avatarUrl) {
   avatar.replaceChildren(image);
 }
 
+function updateBanner(bannerUrl) {
+  const preview = document.getElementById("edit-banner-preview");
+  if (!bannerUrl) {
+    preview.removeAttribute("src");
+    preview.hidden = true;
+    return;
+  }
+
+  preview.src = bannerUrl;
+  preview.hidden = false;
+}
+
 async function loadEditableProfile() {
   if (!token) {
     window.location.assign("login.html?returnTo=edit-profile.html");
@@ -61,6 +74,7 @@ async function loadEditableProfile() {
     if (profile.role !== "admin" && profile.role !== "artist") {
       showStatus("Solo el administrador o un artista pueden editar este perfil.", true);
       form.querySelectorAll("input, textarea, button").forEach((field) => { field.disabled = true; });
+      bannerFileInput.disabled = true;
       return;
     }
 
@@ -70,6 +84,7 @@ async function loadEditableProfile() {
     document.getElementById("edit-bio").value = profile.bio;
     document.getElementById("edit-response").value = profile.responseTime;
     updateAvatar(profile.name, profile.avatarUrl);
+    updateBanner(profile.bannerUrl);
   } catch (error) {
     showStatus(error instanceof Error ? error.message : "No se pudo cargar el perfil.", true);
   }
@@ -110,30 +125,49 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
-avatarFileInput.addEventListener("change", async () => {
-  const file = avatarFileInput.files && avatarFileInput.files[0];
+async function uploadProfileImage(input, formField, endpoint, responseField, label, onUploaded) {
+  const file = input.files && input.files[0];
   if (!file) return;
 
   const formData = new FormData();
-  formData.append("avatar", file);
-  avatarFileInput.disabled = true;
-  showStatus("Subiendo foto de perfil…");
+  formData.append(formField, file);
+  input.disabled = true;
+  showStatus(`Subiendo ${label}…`);
 
   try {
-    const response = await fetch(`${apiBaseUrl}/users/me/avatar`, {
+    const response = await fetch(`${apiBaseUrl}${endpoint}`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: formData
     });
-    const result = await readApiResponse(response, "No se pudo subir la foto.");
-    updateAvatar(document.getElementById("edit-name").value.trim(), result.avatarUrl);
-    showStatus("Foto de perfil actualizada.");
+    const result = await readApiResponse(response, `No se pudo subir ${label}.`);
+    const imageUrl = result[responseField];
+    if (typeof imageUrl !== "string" || !imageUrl) {
+      throw new Error(`El servidor no devolvió la URL de ${label}.`);
+    }
+    onUploaded(imageUrl);
+    showStatus(formField === "avatar" ? "Foto de perfil actualizada." : "Banner actualizado.");
   } catch (error) {
-    showStatus(error instanceof Error ? error.message : "No se pudo subir la foto.", true);
+    showStatus(error instanceof Error ? error.message : `No se pudo subir ${label}.`, true);
   } finally {
-    avatarFileInput.value = "";
-    avatarFileInput.disabled = false;
+    input.value = "";
+    input.disabled = false;
   }
+}
+
+avatarFileInput.addEventListener("change", () => {
+  uploadProfileImage(
+    avatarFileInput,
+    "avatar",
+    "/users/me/avatar",
+    "avatarUrl",
+    "foto de perfil",
+    (avatarUrl) => updateAvatar(document.getElementById("edit-name").value.trim(), avatarUrl)
+  );
+});
+
+bannerFileInput.addEventListener("change", () => {
+  uploadProfileImage(bannerFileInput, "banner", "/users/me/banner", "bannerUrl", "banner", updateBanner);
 });
 
 loadEditableProfile();

@@ -2,17 +2,17 @@ import type { Request, Response } from 'express';
 import { v2 as cloudinary } from 'cloudinary';
 import { UserModel } from '../models/User';
 
-function uploadAvatar(buffer: Buffer): Promise<string> {
+function uploadProfileImage(buffer: Buffer, folder: string, label: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
-      { folder: 'artfolio/avatars', resource_type: 'image' },
+      { folder, resource_type: 'image' },
       (error, result) => {
         if (error) {
           reject(error);
           return;
         }
         if (!result?.secure_url) {
-          reject(new Error('Cloudinary no devolvió una URL segura para la foto.'));
+          reject(new Error(`Cloudinary no devolvió una URL segura para ${label}.`));
           return;
         }
         resolve(result.secure_url);
@@ -22,17 +22,23 @@ function uploadAvatar(buffer: Buffer): Promise<string> {
   });
 }
 
-export const updateMyAvatar = async (req: Request, res: Response) => {
+async function updateProfileImage(
+  req: Request,
+  res: Response,
+  field: 'avatarUrl' | 'bannerUrl',
+  folder: string,
+  label: string
+) {
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
   const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
   if (!cloudName || !apiKey || !apiSecret) {
     return res.status(503).json({
-      error: 'La subida de fotos requiere CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY y CLOUDINARY_API_SECRET.'
+      error: 'La subida de imágenes requiere CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY y CLOUDINARY_API_SECRET.'
     });
   }
   if (!req.file) {
-    return res.status(400).json({ error: 'Selecciona una imagen válida.' });
+    return res.status(400).json({ error: `Selecciona una imagen válida para ${label}.` });
   }
 
   cloudinary.config({
@@ -42,16 +48,23 @@ export const updateMyAvatar = async (req: Request, res: Response) => {
   });
 
   try {
-    const avatarUrl = await uploadAvatar(req.file.buffer);
+    const imageUrl = await uploadProfileImage(req.file.buffer, folder, label);
     const user = await UserModel.findByIdAndUpdate(
       res.locals.userId,
-      { $set: { avatarUrl } },
-      { new: true, runValidators: true }
-    ).select('_id avatarUrl');
+      { $set: { [field]: imageUrl } },
+      { returnDocument: 'after', runValidators: true }
+    ).select('_id avatarUrl bannerUrl');
     if (!user) return res.status(404).json({ error: 'No se encontró la cuenta.' });
-    return res.status(200).json({ mensaje: 'Foto de perfil actualizada.', avatarUrl: user.avatarUrl });
+    const savedImageUrl = field === 'avatarUrl' ? user.avatarUrl : user.bannerUrl;
+    return res.status(200).json({ mensaje: `Se actualizó ${label}.`, [field]: savedImageUrl });
   } catch (error) {
-    console.error('Error al subir la foto de perfil:', error);
-    return res.status(502).json({ error: 'No se pudo subir o guardar la foto de perfil.' });
+    console.error(`Error al subir ${label}:`, error);
+    return res.status(502).json({ error: `No se pudo subir o guardar ${label}.` });
   }
-};
+}
+
+export const updateMyAvatar = (req: Request, res: Response) =>
+  updateProfileImage(req, res, 'avatarUrl', 'artfolio/avatars', 'la foto de perfil');
+
+export const updateMyBanner = (req: Request, res: Response) =>
+  updateProfileImage(req, res, 'bannerUrl', 'artfolio/banners', 'el banner');

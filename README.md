@@ -120,7 +120,7 @@ Después de iniciar sesión con rol `artist` o `admin`, usa **Gestionar comision
 
 Los clientes pueden editar su nombre, usuario (`handle`) y biografía desde **Mi perfil** en `client-dashboard.html`. También pueden subir una foto de perfil, que se almacena en Cloudinary y cuya URL se guarda en el documento de usuario en MongoDB. La edición y la subida requieren una sesión válida de cliente; estos datos no se incluyen en el endpoint de perfil público.
 
-El artista o administrador puede subir su foto desde **Editar perfil** en el perfil principal. La imagen se guarda en Cloudinary y MongoDB conserva su `avatarUrl`, que se muestra en el formulario y en el perfil público. La subida requiere iniciar sesión y tener configuradas las credenciales de Cloudinary en `backend/src/.env`.
+El artista o administrador puede subir su foto y banner desde **Editar perfil** en el perfil principal. Las imágenes se guardan en Cloudinary y MongoDB conserva sus URL en `avatarUrl` y `bannerUrl`, que se muestran en el perfil público. La subida requiere iniciar sesión y tener configuradas las credenciales de Cloudinary en `backend/src/.env`.
 
 ### Pruebas y CI
 

@@ -116,6 +116,42 @@ test("artist avatar uploads reach file validation", { skip: !process.env.TEST_MO
   assert.match((await response.json()).error, /JPG, PNG, WebP o GIF/);
 });
 
+test("only artists and admins can upload a profile banner", { skip: !process.env.TEST_MONGO_URI }, async () => {
+  const client = await UserModel.create({
+    name: "Banner Client",
+    email: "banner-client@example.test",
+    passwordHash: "unused-test-password",
+    role: "client"
+  });
+  const artistForm = new FormData();
+  artistForm.append("banner", new Blob(["not an image"], { type: "text/plain" }), "banner.txt");
+  const artistResponse = await fetch(`${baseUrl}/api/users/me/banner`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${createAuthToken(artist.id)}` },
+    body: artistForm
+  });
+  assert.equal(artistResponse.status, 400);
+  assert.match((await artistResponse.json()).error, /JPG, PNG, WebP o GIF/);
+
+  const clientForm = new FormData();
+  clientForm.append("banner", new Blob(["not an image"], { type: "text/plain" }), "banner.txt");
+  const clientResponse = await fetch(`${baseUrl}/api/users/me/banner`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${createAuthToken(client.id)}` },
+    body: clientForm
+  });
+  assert.equal(clientResponse.status, 403);
+});
+
+test("artist public profile includes its saved banner URL", { skip: !process.env.TEST_MONGO_URI }, async () => {
+  const bannerUrl = "https://res.cloudinary.com/example/image/upload/artfolio/banners/test.png";
+  await UserModel.findByIdAndUpdate(artist.id, { $set: { bannerUrl } });
+
+  const response = await fetch(`${baseUrl}/api/users/${artist.id}`);
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).user.bannerUrl, bannerUrl);
+});
+
 test("artwork endpoint returns legacy Cloudinary images without a category", { skip: !process.env.TEST_MONGO_URI }, async () => {
   const imageUrl = "https://res.cloudinary.com/example/image/upload/artfolio/test.png";
   await ArtworkModel.collection.insertOne({

@@ -20,6 +20,13 @@
 .edit-profile-photo label { color: #d8d7e2; font-size: 13px; font-weight: 700; }
 .edit-profile-photo input { color: var(--text); font: inherit; }
 .edit-profile-photo small { color: var(--muted); font-size: 12px; }
+.edit-profile-banner { display: grid; gap: 8px; margin: 0 0 24px; }
+.edit-profile-banner label { color: #d8d7e2; font-size: 13px; font-weight: 700; }
+.edit-profile-banner input { color: var(--text); font: inherit; }
+.edit-profile-banner small { color: var(--muted); font-size: 12px; }
+.edit-profile-banner-preview { height: 150px; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(135deg, #343144, #1d1d29); }
+.edit-profile-banner-preview img { width: 100%; height: 100%; object-fit: cover; }
+.edit-profile-banner-preview img[hidden] { display: none; }
 #edit-profile-form { display: grid; gap: 9px; }
 #edit-profile-form label { margin-top: 8px; color: #d8d7e2; font-size: 13px; font-weight: 700; }
 #edit-profile-form input, #edit-profile-form textarea { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: #1d1d29; color: var(--text); font: inherit; }

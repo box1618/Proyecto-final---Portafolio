@@ -34,6 +34,18 @@ function updateProfileAvatar(name, avatarUrl) {
   avatar.replaceChildren(image);
 }
 
+function updateProfileBanner(bannerUrl) {
+  const banner = document.getElementById("profile-banner-image");
+  if (!bannerUrl) {
+    banner.removeAttribute("src");
+    banner.hidden = true;
+    return;
+  }
+
+  banner.src = bannerUrl;
+  banner.hidden = false;
+}
+
 async function loadProfile() {
   const token = getAccessToken();
   let profile = null;
@@ -69,6 +81,7 @@ async function loadProfile() {
   document.getElementById("profile-bio").textContent = profile.bio;
   document.getElementById("profile-response").textContent = profile.responseTime;
   updateProfileAvatar(profile.name, profile.avatarUrl);
+  updateProfileBanner(profile.bannerUrl);
 
   const ownsProfile = selfProfile && (!profileId || profileId === selfProfile.id);
   const canEdit = ownsProfile && (selfProfile.role === "admin" || selfProfile.role === "artist");

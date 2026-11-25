@@ -67,7 +67,7 @@ test("validates editable service listings and their package prices", () => {
 });
 
 test("artist profile fields have no database defaults on new users", () => {
-  for (const field of ["handle", "artistTitle", "bio", "responseTime"]) {
+  for (const field of ["handle", "avatarUrl", "bannerUrl", "artistTitle", "bio", "responseTime"]) {
     assert.equal(UserModel.schema.path(field).options.default, undefined);
   }
 });

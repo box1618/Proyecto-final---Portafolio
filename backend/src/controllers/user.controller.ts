@@ -19,6 +19,7 @@ const profileUser = (user: HydratedDocument<IUser>): {
   role: IUser['role'];
   handle?: string;
   avatarUrl?: string;
+  bannerUrl?: string;
   artistTitle?: string;
   bio?: string;
   responseTime?: string;
@@ -38,6 +39,7 @@ const profileUser = (user: HydratedDocument<IUser>): {
     ...profile,
     handle: user.handle || 'artfoliostudio',
     avatarUrl: user.avatarUrl,
+    bannerUrl: user.bannerUrl,
     artistTitle: user.artistTitle || 'Artista digital / concept artist',
     bio: user.bio || 'Diseño mundos, personajes y escenas para historias que merecen ser recordadas.',
     responseTime: user.responseTime || 'Respondo mensajes en 1-2 días hábiles'
@@ -70,6 +72,7 @@ export const getPublicProfile = async (req: Request, res: Response) => {
           : {
               handle: profile.handle,
               avatarUrl: profile.avatarUrl,
+              bannerUrl: profile.bannerUrl,
               artistTitle: profile.artistTitle,
               bio: profile.bio,
               responseTime: profile.responseTime

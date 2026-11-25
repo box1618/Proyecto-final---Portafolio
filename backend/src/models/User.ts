@@ -8,6 +8,7 @@ export interface IUser extends Document {
   birthDate?: Date;
   handle?: string;
   avatarUrl?: string;
+  bannerUrl?: string;
   artistTitle?: string;
   bio?: string;
   responseTime?: string;
@@ -22,6 +23,7 @@ const userSchema = new Schema<IUser>({
   birthDate: { type: Date },
   handle: { type: String, trim: true, maxlength: 30 },
   avatarUrl: { type: String, trim: true, maxlength: 500 },
+  bannerUrl: { type: String, trim: true, maxlength: 500 },
   artistTitle: { type: String, trim: true, maxlength: 80 },
   bio: { type: String, trim: true, maxlength: 300 },
   responseTime: { type: String, trim: true, maxlength: 100 },
